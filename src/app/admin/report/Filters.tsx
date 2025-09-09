@@ -1,18 +1,12 @@
-import DatePicker from 'react-multi-date-picker'
-
-import persian from 'react-date-object/calendars/persian'
-import persian_fa from 'react-date-object/locales/persian_fa'
-
 import { Funnel, RotateCcw } from 'lucide-react'
-import { useState } from 'react'
 import moment from 'moment-jalaali'
 import type { GetFilteredTrainingTexts } from '../../../services/types/Admin'
-import { useLazyGetFilteredTrainingTextsQuery } from '../../../services/Admin'
 import SelectComp from '../../../ui/SelectComp'
 import TextInputComp from '../../../components/TextInputComp'
 import ButtonComp from '../../../ui/ButtonComp'
-import { Switch } from '@radix-ui/react-switch'
 import { Label } from '../../../components/ui/label'
+import { Switch } from '../../../components/ui/switch'
+import DatePickerComp from '../../../components/DatePickerComp'
 
 const options = [
   { name: 'همه', value: 'null' },
@@ -21,26 +15,15 @@ const options = [
 ]
 
 interface FiltersPropsType {
+  filters: GetFilteredTrainingTexts
+  setFilters: React.Dispatch<React.SetStateAction<GetFilteredTrainingTexts>>
   loading: boolean
+  onFilter: () => void
+  onReset: () => void
 }
 
-const initialFilters: GetFilteredTrainingTexts = {
-  isConfirmedVoice: 'null',
-  searchText: '',
-  isActiveText: true,
-  shouldFilteredVoiceDateTime: true,
-  startDateTime: null,
-  endDateTime: null,
-}
-
-export default function Filters() {
-  const [
-    LazyGetFilteredTrainingTexts,
-    { isFetching: LazyGetFilteredTrainingTextsLoading },
-  ] = useLazyGetFilteredTrainingTextsQuery()
-
-  const [filters, setFilters] =
-    useState<GetFilteredTrainingTexts>(initialFilters)
+export default function Filters(props: FiltersPropsType) {
+  const { filters, setFilters, loading, onFilter, onReset } = props
 
   const changeHandler = (e: React.ChangeEvent<any>) => {
     setFilters({ ...filters, [e.target.name]: e.target.value })
@@ -59,15 +42,6 @@ export default function Filters() {
     setFilters({ ...filters, [name]: e })
   }
 
-  const filtersHandler = async () => {
-    const data = await LazyGetFilteredTrainingTexts(filters).unwrap()
-    console.log(data)
-  }
-  const resetHandler = async () => {
-    setFilters(initialFilters)
-    const data = await LazyGetFilteredTrainingTexts(initialFilters).unwrap()
-    console.log(data)
-  }
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4">
@@ -86,7 +60,7 @@ export default function Filters() {
           className="flex-1"
         />
       </div>
-      <div className="flex !items-center space-x-2">
+      <div className="flex !items-center gap-3">
         <Label htmlFor="airplane-mode" className="text-primary-500">
           تاریخ صوت
         </Label>
@@ -106,20 +80,14 @@ export default function Filters() {
         </Label>
       </div>
       <div className="flex items-center gap-4">
-        <DatePicker
-          calendar={persian}
-          locale={persian_fa}
+        <DatePickerComp
           placeholder="از تاریخ"
-          inputClass="!flex-1 w-full border border-primary-900 rounded-lg p-2 bg-primary-100"
           name="startDateTime"
           value={filters.startDateTime}
           onChange={(data) => changeDateHandler(data, 'startDateTime')}
         />
-        <DatePicker
-          calendar={persian}
-          locale={persian_fa}
+        <DatePickerComp
           placeholder="تا تاریخ"
-          inputClass="!flex-1 w-full border border-primary-900 rounded-lg p-2 bg-primary-100"
           name="endDateTime"
           value={filters.endDateTime}
           onChange={(data) => changeDateHandler(data, 'endDateTime')}
@@ -131,9 +99,9 @@ export default function Filters() {
           isFormButton={true}
           canClick={true}
           type="submit"
-          disabled={LazyGetFilteredTrainingTextsLoading}
-          loading={LazyGetFilteredTrainingTextsLoading}
-          onsubmit={filtersHandler}
+          disabled={loading}
+          loading={loading}
+          onsubmit={onFilter}
           text={<Funnel className="!text-2xl" />}
         />
         <ButtonComp
@@ -141,9 +109,9 @@ export default function Filters() {
           isFormButton={true}
           canClick={true}
           type="submit"
-          disabled={LazyGetFilteredTrainingTextsLoading}
-          loading={LazyGetFilteredTrainingTextsLoading}
-          onsubmit={resetHandler}
+          disabled={loading}
+          loading={loading}
+          onsubmit={onReset}
           text={<RotateCcw className="!text-xl" />}
         />
       </div>

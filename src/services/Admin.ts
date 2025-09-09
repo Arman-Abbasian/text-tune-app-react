@@ -94,5 +94,6 @@ export const Admin = createApi({
 export const {
   useAddOrUpdateTrainingTextsMutation,
   useConfirmOrUnconfirmedTrainingVoiceMutation,
+  useGetFilteredTrainingTextsQuery,
   useLazyGetFilteredTrainingTextsQuery,
 } = Admin

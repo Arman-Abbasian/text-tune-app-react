@@ -1,22 +1,27 @@
-import { useLazyGetFilteredTrainingTextsQuery } from '../../../services/Admin'
 import TagComp from '../../../ui/TagComp'
+import BeatLoaderComponent from '../../../ui/BeatLoaderComp'
 
-export default function TextsSection() {
-  const [
-    LazyGetFilteredTrainingTexts,
-    {
-      data: LazyGetFilteredTrainingTextsData,
-      isFetching: LazyGetFilteredTrainingTextsLoading,
-    },
-  ] = useLazyGetFilteredTrainingTextsQuery()
+interface TextsSectionType {
+  loading: boolean
+  data: any
+}
 
-  const data = LazyGetFilteredTrainingTextsData?.data || []
+export default function TextsSection(props: TextsSectionType) {
+  const { loading, data } = props
+
+  if (loading) return <BeatLoaderComponent />
+
+  if (data?.length > 0)
+    return (
+      <>
+        {data?.map((item: any, index: number) => {
+          return <TextItem key={index} text={item.text} tags={item.tags} />
+        })}
+      </>
+    )
+
   return (
-    <>
-      {data.map((item: any, index: number) => {
-        return <TextItem key={index} text={item.text} tags={item.tags} />
-      })}
-    </>
+    <p className="text-primary-700 text-center">متنی جهت خواندن وجود ندارد</p>
   )
 }
 
