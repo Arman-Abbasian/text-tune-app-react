@@ -15,5 +15,9 @@ export default function AdminRoutes() {
     return <Navigate to="/user" replace />
   }
 
-  return <div className="h-full">{isAuthenticated === null && <Outlet />}</div>
+  return (
+    <div className="h-full">
+      {isAuthenticated === null ? <BeatLoaderComponent /> : <Outlet />}
+    </div>
+  )
 }

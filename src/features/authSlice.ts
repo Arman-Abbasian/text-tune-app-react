@@ -2,14 +2,16 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 interface AuthState {
   isAuthenticated: boolean | null
-  token: string | null
   userRole: string | null
+  username: string
+  token: string | null
   tokenExpiration: string | null
 }
 
 const initialState: AuthState = {
   isAuthenticated: null,
   userRole: null,
+  username: '',
   token: null,
   tokenExpiration: null,
 }
@@ -23,29 +25,28 @@ const authSlice = createSlice({
       action: PayloadAction<{
         token: string
         expiration: string
-        fullName: string
-        mobile: string
+        username: string
+        userRole: string
       }>
     ) => {
       state.isAuthenticated = true
       state.token = action.payload.token
       state.tokenExpiration = action.payload.expiration
-      localStorage.setItem('fullName', action.payload.fullName)
-      localStorage.setItem('mobile', action.payload.mobile)
+      state.userRole = action.payload.userRole
+      state.username = action.payload.username
       localStorage.setItem('token', action.payload.token)
       localStorage.setItem('tokenExpiration', action.payload.expiration)
     },
 
     logout: (state) => {
       state.isAuthenticated = false
+      state.userRole = null
+      state.username = ''
       state.token = null
       state.tokenExpiration = null
 
       localStorage.removeItem('token')
       localStorage.removeItem('tokenExpiration')
-      localStorage.removeItem('fullName')
-      localStorage.removeItem('mobile')
-      localStorage.removeItem('cart')
     },
 
     checkAuthFromStorage: (state) => {

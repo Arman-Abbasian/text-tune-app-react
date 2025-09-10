@@ -10,7 +10,7 @@ export default function StatiscticsCart(props: StatiscticsCartPropsType) {
   const { statistics, title, className } = props
   return (
     <div
-      className={`w-56 h-56 bg-white/30 backdrop-blur-2xl shadow-2xl drop-shadow-2xl rounded-lg relative p-4 flex flex-col gap-2 ${className}`}
+      className={`w-56 h-56 backdrop-blur-2xl shadow-2xl drop-shadow-2xl rounded-lg relative p-4 flex flex-col gap-2 hover:scale-110 text-secondary-900/80 ${className}`}
     >
       <div className="flex justify-end">
         <LogoBox>

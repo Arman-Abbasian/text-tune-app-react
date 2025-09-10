@@ -12,8 +12,12 @@ export default function UserRoutes() {
     return <Navigate to="/auth/login" replace />
   }
   if (isAuthenticated && userRole === 'Admin') {
-    return <Navigate to="/Admin" replace />
+    return <Navigate to="/admin" replace />
   }
 
-  return <div className="h-full">{isAuthenticated === null && <Outlet />}</div>
+  return (
+    <div className="h-full">
+      {isAuthenticated === null ? <BeatLoaderComponent /> : <Outlet />}
+    </div>
+  )
 }

@@ -24,7 +24,7 @@ export default function TextsSection(props: TextsSectionType) {
     )
 
   return (
-    <p className="text-primary-700 text-center">متنی جهت خواندن وجود ندارد</p>
+    <p className="text-primary-700 text-center">متنی جهت نمایش وجود ندارد</p>
   )
 }
 
