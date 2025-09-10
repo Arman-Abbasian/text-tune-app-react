@@ -4,10 +4,11 @@ import BeatLoaderComponent from '../../../ui/BeatLoaderComp'
 interface TextsSectionType {
   loading: boolean
   data: any
+  onItemSelect: (id: string) => void
 }
 
 export default function TextsSection(props: TextsSectionType) {
-  const { loading, data } = props
+  const { loading, data, onItemSelect } = props
 
   if (loading) return <BeatLoaderComponent />
 
@@ -15,7 +16,9 @@ export default function TextsSection(props: TextsSectionType) {
     return (
       <>
         {data?.map((item: any, index: number) => {
-          return <TextItem key={index} text={item.text} tags={item.tags} />
+          return (
+            <TextItem key={index} item={item} onItemSelect={onItemSelect} />
+          )
         })}
       </>
     )
@@ -26,17 +29,21 @@ export default function TextsSection(props: TextsSectionType) {
 }
 
 type TextItemPropsType = {
-  text: string
-  tags: string[]
+  item: any
+  onItemSelect: (id: string) => void
 }
 function TextItem(props: TextItemPropsType) {
-  const { text, tags } = props
+  const { item, onItemSelect } = props
+  const { text, tags, id } = item
 
   return (
-    <div className="flex flex-col gap-4 w-full bg-primary-100 text-primary-700 rounded-lg p-4">
+    <div
+      className="flex flex-col gap-4 w-full bg-primary-100 text-primary-700 rounded-lg p-4"
+      onClick={() => onItemSelect(id)}
+    >
       <p>{text}</p>
       <div className="flex items-center gap-2 flex-wrap">
-        {tags.map((item) => {
+        {tags.map((item: any) => {
           return <TagComp key={item}>{item}</TagComp>
         })}
       </div>

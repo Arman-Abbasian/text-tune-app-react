@@ -4,32 +4,32 @@ import Filters from './Filters'
 import TextsSection from './TextsSection'
 import { useLazyGetFilteredTrainingTextsQuery } from '../../../services/Admin'
 
-const list = [
-  {
-    text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-    tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-  },
-  {
-    text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-    tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-  },
-  {
-    text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-    tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-  },
-  {
-    text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-    tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-  },
-  {
-    text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-    tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-  },
-  {
-    text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-    tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-  },
-]
+// const list = [
+//   {
+//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
+//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
+//   },
+//   {
+//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
+//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
+//   },
+//   {
+//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
+//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
+//   },
+//   {
+//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
+//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
+//   },
+//   {
+//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
+//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
+//   },
+//   {
+//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
+//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
+//   },
+// ]
 
 const initialFilters: GetFilteredTrainingTexts = {
   isConfirmedVoice: 'null',
@@ -40,7 +40,13 @@ const initialFilters: GetFilteredTrainingTexts = {
   endDateTime: null,
 }
 
-export function TextList() {
+interface TextListPropsType {
+  onItemSelect: (id: string) => void
+}
+
+export function TextList(props: TextListPropsType) {
+  const { onItemSelect } = props
+
   const [filters, setFilters] =
     useState<GetFilteredTrainingTexts>(initialFilters)
 
@@ -52,7 +58,6 @@ export function TextList() {
     },
   ] = useLazyGetFilteredTrainingTextsQuery()
 
-  // اولین بار که کامپوننت mount شد
   useEffect(() => {
     LazyGetFilteredTrainingTexts(filters)
   }, [])
@@ -83,6 +88,7 @@ export function TextList() {
       <TextsSection
         loading={LazyGetFilteredTrainingTextsLoading}
         data={LazyGetFilteredTrainingTextsData?.data}
+        onItemSelect={onItemSelect}
       />
       <div className="flex flex-col flex-1 gap-4 overflow-y-auto"></div>
     </div>

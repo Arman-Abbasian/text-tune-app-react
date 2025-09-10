@@ -13,8 +13,14 @@ import {
 import TextAreaComp from '../../../components/TextAreaComp'
 import ButtonComp from '../../../ui/ButtonComp'
 import ModalComp from '../../../ui/ModalComp'
+import LottieWrapper from '../../../components/Lottie'
 
-const AdminTextVoicesTable = () => {
+interface AdminTextVoicesTablePropsType {
+  id: string
+}
+
+const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
+  const { id } = props
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [
@@ -28,84 +34,97 @@ const AdminTextVoicesTable = () => {
       confirmationDescription: 'dsf',
     })
   }
+  if (!id) {
+    return (
+      <div className="flex flex-col gap-8">
+        <p className="text-center text-primary-900 text-2xl font-semibold">
+          برای نمایش جزئیات هر متن لطفا روی متن مورد نظر کلیک کنید
+        </p>
+        <LottieWrapper src="/json/click.json" loop autoplay className="h-52" />
+      </div>
+    )
+  }
 
-  return (
-    <>
-      <Table className="rounded-lg overflow-hidden shadow-2xl drop-shadow-2xl">
-        <TableHeader className="bg-primary-700">
-          <TableRow>
-            <TableHead className="text-right text-primary-300">
-              نام کاربر
-            </TableHead>
-            <TableHead className="text-center text-primary-300">
-              تاریخ ضبط
-            </TableHead>
-            <TableHead className="text-center text-primary-300">
-              فایل صوتی
-            </TableHead>
-            <TableHead className="text-center text-primary-300">
-              یادداشت
-            </TableHead>
-            <TableHead className="text-center text-primary-300">
-              وضعیت
-            </TableHead>
-            <TableHead className="text-left text-primary-300">
-              تغییر وضعیت
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody className="text-primary-900 bg-primary-100">
-          {items.length === 0 ? (
-            <p>متنی جهت خواندن موجود نیست</p>
-          ) : (
-            items.map((item) => (
-              <TableRow key={item.id} className="text-primary-700">
-                <TableCell className="text-right">{item.username}</TableCell>
-                <TableCell className="text-center">{item.date}</TableCell>
-                <TableCell className="text-center">{item.link}</TableCell>
-                <TableCell className="flex justify-center text-center">
-                  <Eye onClick={() => setIsModalOpen(true)} />
-                </TableCell>
-                <TableCell className="text-center">{item.condition}</TableCell>
-                <TableCell className="flex justify-end gap-6">
-                  <CircleCheckBig className="text-success" />
-                  <CircleX className="text-danger" />
-                </TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-      <ModalComp
-        open={isModalOpen}
-        onOpenChange={() => setIsModalOpen(false)}
-        title="یادداشت شما"
-        description="می توانید یادداشت را بخوانید, ویرایش یا اضافه کنید"
-      >
-        <div className="flex justify-center items-center">
-          <DotLottieReact
-            src="/json/read.json"
-            loop
-            autoplay
-            className="h-36 w-64 flex justify-center"
-          />
-        </div>
-        <div className="flex flex-col gap-6">
-          <TextAreaComp placeholder="هنوز یادداشت اضافه نکرده اید..." />
-          <ButtonComp
-            className={`flex-1 hover:bg-primary-100 hover:text-primary-700 text-secondary-100 `}
-            isFormButton={true}
-            canClick={true}
-            type="submit"
-            disabled={ConfirmOrUnconfirmedTrainingVoiceLoading}
-            loading={ConfirmOrUnconfirmedTrainingVoiceLoading}
-            onsubmit={addCommentHandler}
-            text="افزودن"
-          />
-        </div>
-      </ModalComp>
-    </>
-  )
+  if (id)
+    return (
+      <>
+        <Table className="rounded-lg overflow-hidden shadow-2xl drop-shadow-2xl">
+          <TableHeader className="bg-primary-700">
+            <TableRow>
+              <TableHead className="text-right text-primary-300">
+                نام کاربر
+              </TableHead>
+              <TableHead className="text-center text-primary-300">
+                تاریخ ضبط
+              </TableHead>
+              <TableHead className="text-center text-primary-300">
+                فایل صوتی
+              </TableHead>
+              <TableHead className="text-center text-primary-300">
+                یادداشت
+              </TableHead>
+              <TableHead className="text-center text-primary-300">
+                وضعیت
+              </TableHead>
+              <TableHead className="text-left text-primary-300">
+                تغییر وضعیت
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="text-primary-900 bg-primary-100">
+            {items.length === 0 ? (
+              <p>متنی جهت خواندن موجود نیست</p>
+            ) : (
+              items.map((item) => (
+                <TableRow key={item.id} className="text-primary-700">
+                  <TableCell className="text-right">{item.username}</TableCell>
+                  <TableCell className="text-center">{item.date}</TableCell>
+                  <TableCell className="text-center">{item.link}</TableCell>
+                  <TableCell className="flex justify-center text-center">
+                    <Eye onClick={() => setIsModalOpen(true)} />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {item.condition}
+                  </TableCell>
+                  <TableCell className="flex justify-end gap-6">
+                    <CircleCheckBig className="text-success" />
+                    <CircleX className="text-danger" />
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+        <ModalComp
+          open={isModalOpen}
+          onOpenChange={() => setIsModalOpen(false)}
+          title="یادداشت شما"
+          description="می توانید یادداشت را بخوانید, ویرایش یا اضافه کنید"
+        >
+          <div className="flex justify-center items-center">
+            <DotLottieReact
+              src="/json/read.json"
+              loop
+              autoplay
+              className="h-36 w-64 flex justify-center"
+            />
+          </div>
+          <div className="flex flex-col gap-6">
+            <TextAreaComp placeholder="هنوز یادداشت اضافه نکرده اید..." />
+            <ButtonComp
+              className={`flex-1 hover:bg-primary-100 hover:text-primary-700 text-secondary-100 `}
+              isFormButton={true}
+              canClick={true}
+              type="submit"
+              disabled={ConfirmOrUnconfirmedTrainingVoiceLoading}
+              loading={ConfirmOrUnconfirmedTrainingVoiceLoading}
+              onsubmit={addCommentHandler}
+              text="افزودن"
+            />
+          </div>
+        </ModalComp>
+      </>
+    )
 }
 
 export default AdminTextVoicesTable
