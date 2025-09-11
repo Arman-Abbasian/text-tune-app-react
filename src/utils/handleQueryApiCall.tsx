@@ -1,32 +1,46 @@
 import React from 'react'
+import BeatLoaderFetch from '../ui/BeatLoaderFetch'
+import { RefreshCcw } from 'lucide-react'
+import type { ApiResponse } from '../services/types/globalSerivicesType'
 
-type QueryWrapperProps<T> = {
-  // می‌گیم هر چیزی که از useQuery بیاد قابل قبوله
-  queryResult: ReturnType<any>
-  children: (data: T) => React.ReactNode
+interface QueryReturnTyep<T> {
+  data?: ApiResponse<T>
+  isLoading: boolean
+  isError: boolean
+  refetch: () => any
+}
+type QueryWrapperPropsType<TData, TResult> = {
+  queryResult: TResult
+  children: (data: TData) => React.ReactNode
 }
 
-export function QueryWrapper<T>({
+export function QueryWrapper<TData, TResult extends QueryReturnTyep<TData>>({
   queryResult,
   children,
-}: QueryWrapperProps<T>) {
+}: QueryWrapperPropsType<TData, TResult>) {
   const { data, isLoading, isError, refetch } = queryResult
 
   if (isLoading) {
-    return <div></div>
+    return (
+      <div>
+        <BeatLoaderFetch />
+      </div>
+    )
   }
 
   if (isError) {
     return (
-      <div>
-        <p>Something went wrong!</p>
-        <button onClick={() => refetch()}>Retry</button>
+      <div className="flex items-center gap-2">
+        <p className="text-sm text-danger">مشکلی رخ داده است</p>
+        <button onClick={() => refetch()}>
+          <RefreshCcw />
+        </button>
       </div>
     )
   }
 
   if (data && !data.isSuccess) {
-    return <div>{data.message}</div>
+    return <div>{data.message || 'مشکلی رخ داده است'}</div>
   }
 
   if (data && data.isSuccess && data.data !== undefined) {

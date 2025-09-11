@@ -3,23 +3,48 @@ import { useState } from 'react'
 import { useLoginMutation } from '../../../services/Authentication'
 import TextInputComp from '../../../components/TextInputComp'
 import ButtonComp from '../../../ui/ButtonComp'
+import { handleMutationApiCall } from '../../../utils/handleMutationApiCall'
+import { useDispatch } from 'react-redux'
+import { login } from '../../../features/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 type LoginFormPropsType = {
   username: string
   password: string
 }
 export default function LoginForm() {
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState<LoginFormPropsType>({
     username: '',
     password: '',
   })
+  let navigate = useNavigate()
   const [Login, { isLoading: LoginLoading }] = useLoginMutation()
-  const submitHandler = () => {
-    Login({
-      userName: formData.username,
-      passWord: formData.password,
-      rememberMe: true,
-    })
+  const submitHandler = async () => {
+    await handleMutationApiCall<any>(
+      () =>
+        Login({
+          userName: formData.username,
+          passWord: formData.password,
+          rememberMe: true,
+        }).unwrap(),
+
+      (data) => {
+        dispatch(
+          login({
+            username: data?.fullName || '',
+            userRole: data?.userRole || '',
+            token: data?.token || '',
+            expiration: data?.expiration || '',
+          })
+        )
+        if (data?.userRole === 'Admin') navigate('/admin')
+        else navigate('/user')
+      },
+      (response) => {
+        console.log('Error:', response)
+      }
+    )
   }
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

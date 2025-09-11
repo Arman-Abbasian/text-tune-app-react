@@ -112,7 +112,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
           <div className="flex flex-col gap-6">
             <TextAreaComp placeholder="هنوز یادداشت اضافه نکرده اید..." />
             <ButtonComp
-              className={`flex-1 hover:bg-primary-100 hover:text-primary-700 text-secondary-100 `}
+              className={`flex-1 hover:bg-primary-100 hover:text-primary-700 text-secondary-100 disabled:`}
               isFormButton={true}
               canClick={true}
               type="submit"

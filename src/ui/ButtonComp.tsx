@@ -24,7 +24,7 @@ const ButtonComp = (props: ButtonProps) => {
   return (
     <button
       onClick={onsubmit}
-      className={`py-3 px-8 rounded-md text-sm text-secondary-100 cursor-pointer flex justify-center items-center  ${
+      className={`py-3 px-8 bg-secondary-700 rounded-md text-sm text-secondary-100 cursor-pointer flex justify-center items-center disabled:cursor-not-allowed disabled:bg-secondary-500/40 hover:bg-secondary-900  ${
         isFormButton && canClick
           ? 'bg-primary-700 cursor-pointer'
           : 'bg-secondary-300 cursor-not-allowed'

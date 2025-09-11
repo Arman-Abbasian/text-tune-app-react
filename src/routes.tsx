@@ -1,16 +1,19 @@
-import Home from './app/page'
-import App from './App'
-import Login from './app/auth/login/page'
-import User from './app/user/page'
-import UserVoice from './app/user/voice/page'
-import GuestRoutes from './components/GuestRoutes'
-import UserRoutes from './components/UserRoutes'
-import AdminRoutes from './components/AdminRoutes'
-import AdminHome from './app/admin/page'
-import AddText from './app/admin/addText/page'
-import AdminReport from './app/admin/report/page'
+import { lazy, Suspense } from 'react'
 
-// const NotFound = lazy(() => import('@/pages/NotFound'))
+// Pages
+const Home = lazy(() => import('./app/page'))
+const App = lazy(() => import('./App'))
+const Login = lazy(() => import('./app/auth/login/page'))
+const User = lazy(() => import('./app/user/page'))
+const UserVoice = lazy(() => import('./app/user/voice/page'))
+const AdminHome = lazy(() => import('./app/admin/page'))
+const AddText = lazy(() => import('./app/admin/addText/page'))
+const AdminReport = lazy(() => import('./app/admin/report/page'))
+
+// Route Wrappers
+const GuestRoutes = lazy(() => import('./components/GuestRoutes'))
+const UserRoutes = lazy(() => import('./components/UserRoutes'))
+const AdminRoutes = lazy(() => import('./components/AdminRoutes'))
 
 export const routes = [
   {

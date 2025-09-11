@@ -39,9 +39,9 @@ const authSlice = createSlice({
     },
 
     logout: (state) => {
-      state.isAuthenticated = false
-      state.userRole = null
-      state.username = ''
+      state.isAuthenticated = true
+      state.userRole = 'Admin'
+      state.username = 'Ali'
       state.token = null
       state.tokenExpiration = null
 
