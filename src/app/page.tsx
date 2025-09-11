@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full">
       <p className=" text-2xl font-bold mb-10">
-        به نرم افزار اصلاح صوت خوش آمدید
+        به نرم افزار کلمات صوت خوش آمدید
       </p>
       <p>منتظر بمانید...</p>
 

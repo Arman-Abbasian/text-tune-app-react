@@ -2,9 +2,13 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import baseQuery from './baseQuery'
 import type {
   AddOrUpdateTrainingTexts,
+  AddOrUpdateTrainingTextsRes,
   ConfirmOrUnconfirmedTrainingVoice,
   GetFilteredTrainingTexts,
+  StatisticsData,
+  TrainingTextDto,
 } from './types/Admin'
+import type { ApiResponse } from './types/globalSerivicesType'
 
 export const Admin = createApi({
   reducerPath: 'Admin',
@@ -12,7 +16,10 @@ export const Admin = createApi({
   tagTypes: ['Admin'],
   endpoints: (builder) => ({
     // Create
-    AddOrUpdateTrainingTexts: builder.mutation<any, AddOrUpdateTrainingTexts>({
+    AddOrUpdateTrainingTexts: builder.mutation<
+      ApiResponse<AddOrUpdateTrainingTextsRes>,
+      AddOrUpdateTrainingTexts
+    >({
       query: (body) => ({
         url: `Admin/AddOrUpdateTrainingTexts`,
         method: 'POST',
@@ -46,7 +53,10 @@ export const Admin = createApi({
       invalidatesTags: ['Admin'],
     }),
     //Read
-    GetFilteredTrainingTexts: builder.query<any, GetFilteredTrainingTexts>({
+    GetFilteredTrainingTexts: builder.query<
+      ApiResponse<TrainingTextDto>,
+      GetFilteredTrainingTexts
+    >({
       query: ({
         isConfirmedVoice,
         isActiveText,
@@ -83,6 +93,18 @@ export const Admin = createApi({
 
         return {
           url: `GetFilteredTrainingTexts?${params.toString()}`,
+          method: 'GET',
+        }
+      },
+      providesTags: ['Admin'],
+    }),
+    GetAdminLandingPageStatistics: builder.query<
+      ApiResponse<StatisticsData>,
+      void
+    >({
+      query: () => {
+        return {
+          url: `/Admin/GetAdminLandingPageStatistics`,
           method: 'GET',
         }
       },
