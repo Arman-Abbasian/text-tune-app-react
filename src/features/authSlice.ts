@@ -5,15 +5,13 @@ interface AuthState {
   userRole: string | null
   username: string
   token: string | null
-  tokenExpiration: string | null
 }
 
 const initialState: AuthState = {
-  isAuthenticated: null,
-  userRole: null,
-  username: '',
-  token: null,
-  tokenExpiration: null,
+  isAuthenticated: true,
+  userRole: 'Admin',
+  username: 'ali',
+  token: 'nudddddll',
 }
 
 const authSlice = createSlice({
@@ -31,7 +29,6 @@ const authSlice = createSlice({
     ) => {
       state.isAuthenticated = true
       state.token = action.payload.token
-      state.tokenExpiration = action.payload.expiration
       state.userRole = action.payload.userRole
       state.username = action.payload.username
       localStorage.setItem('token', action.payload.token)
@@ -39,35 +36,26 @@ const authSlice = createSlice({
     },
 
     logout: (state) => {
-      state.isAuthenticated = true
-      state.userRole = 'Admin'
-      state.username = 'Ali'
+      state.isAuthenticated = false
+      state.userRole = ''
+      state.username = ''
       state.token = null
-      state.tokenExpiration = null
 
       localStorage.removeItem('token')
-      localStorage.removeItem('tokenExpiration')
+      localStorage.removeItem('userRole')
+      localStorage.removeItem('username')
     },
 
     checkAuthFromStorage: (state) => {
       const token = localStorage.getItem('token')
-      const tokenExpiration = localStorage.getItem('tokenExpiration')
+      const userRole = localStorage.getItem('userRole')
+      const username = localStorage.getItem('username')
 
-      if (token && tokenExpiration) {
-        try {
-          const nowTime = Date.now()
-          const tokenTime = new Date(tokenExpiration).getTime()
-
-          if (tokenTime > nowTime) {
-            state.isAuthenticated = true
-            state.token = token
-            state.tokenExpiration = tokenExpiration
-          } else {
-            authSlice.caseReducers.logout(state)
-          }
-        } catch (error) {
-          authSlice.caseReducers.logout(state)
-        }
+      if (token && userRole) {
+        state.token = token
+        state.userRole = userRole || ''
+        state.username = username || ''
+        state.isAuthenticated = true
       } else {
         authSlice.caseReducers.logout(state)
       }
