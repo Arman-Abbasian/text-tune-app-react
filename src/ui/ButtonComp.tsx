@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import BeatLoaderComp from './BeatLoaderComp'
+import BeatLoaderButton from './BeatLoaderButton'
 
 type ButtonProps = {
   onsubmit?: () => void
@@ -31,7 +31,7 @@ const ButtonComp = (props: ButtonProps) => {
       } ${className}`}
       {...restProps}
     >
-      {loading ? <BeatLoaderComp /> : text}
+      {loading ? <BeatLoaderButton /> : text}
     </button>
   )
 }

@@ -1,5 +1,5 @@
 import TagComp from '../../../ui/TagComp'
-import BeatLoaderComponent from '../../../ui/BeatLoaderComp'
+import BeatLoaderFetch from '../../../ui/BeatLoaderFetch'
 
 interface TextsSectionType {
   loading: boolean
@@ -10,7 +10,7 @@ interface TextsSectionType {
 export default function TextsSection(props: TextsSectionType) {
   const { loading, data, onItemSelect } = props
 
-  if (loading) return <BeatLoaderComponent />
+  if (loading) return <BeatLoaderFetch />
 
   if (data?.length > 0)
     return (

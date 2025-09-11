@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
-import BeatLoaderComponent from '../ui/BeatLoaderComp'
 import type { RootState } from '../store'
+import BeatLoaderFetch from '../ui/BeatLoaderFetch'
 
 export default function AdminRoutes() {
   const { isAuthenticated, userRole } = useSelector(
@@ -17,7 +17,7 @@ export default function AdminRoutes() {
 
   return (
     <div className="h-full">
-      {isAuthenticated === null ? <BeatLoaderComponent /> : <Outlet />}
+      {isAuthenticated === null ? <BeatLoaderFetch /> : <Outlet />}
     </div>
   )
 }
