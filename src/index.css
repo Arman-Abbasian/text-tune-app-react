@@ -141,10 +141,10 @@
   --font-family-iran: 'Yekan Bakh', system-ui, -apple-system, sans-serif;
   --font-family-system: system-ui, -apple-system, sans-serif;
 
-  --animate-floatYMinus: floatYMinus 40s ease-in-out infinite;
-  --animate-floatXPlus: floatXPlus 30s ease-in-out infinite;
-  --animate-floatYPlus: floatYPlus 40s ease-in-out infinite;
-  --animate-floatXMinus: floatXMinus 30s ease-in-out infinite;
+  --animate-floatYMinus: floatYMinus 80s ease-in-out infinite;
+  --animate-floatXPlus: floatXPlus 60s ease-in-out infinite;
+  --animate-floatYPlus: floatYPlus 80s ease-in-out infinite;
+  --animate-floatXMinus: floatXMinus 60s ease-in-out infinite;
 
   --spacing-15: 3.75rem;
   --spacing-66: 16.5rem;

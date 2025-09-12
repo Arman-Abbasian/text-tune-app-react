@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import baseQuery from './baseQuery'
-import { Login, Register } from './types/Authentication'
+import type { Login, LoginRes, Register } from './types/Authentication'
+import type { ApiResponse } from './types/globalSerivicesType'
 
 export const Authentication = createApi({
   reducerPath: 'Authentication',
@@ -8,7 +9,7 @@ export const Authentication = createApi({
   tagTypes: ['Authentication'],
   endpoints: (builder) => ({
     // Create
-    Login: builder.mutation<any, Login>({
+    Login: builder.mutation<ApiResponse<LoginRes>, Login>({
       query: (body) => ({
         url: `Authentication/Login`,
         method: 'POST',

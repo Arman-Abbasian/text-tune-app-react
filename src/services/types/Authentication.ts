@@ -4,6 +4,12 @@ export interface Login {
   rememberMe: true
 }
 
+export interface LoginRes {
+  token: string
+  role: string
+  userName: string
+}
+
 export interface Register {
   email: string
   userName: string

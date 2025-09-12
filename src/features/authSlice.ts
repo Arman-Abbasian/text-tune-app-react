@@ -22,17 +22,17 @@ const authSlice = createSlice({
       state,
       action: PayloadAction<{
         token: string
-        expiration: string
-        username: string
-        userRole: string
+        userName: string
+        role: string
       }>
     ) => {
       state.isAuthenticated = true
       state.token = action.payload.token
-      state.userRole = action.payload.userRole
-      state.username = action.payload.username
+      state.userRole = action.payload.role
+      state.username = action.payload.userName
       localStorage.setItem('token', action.payload.token)
-      localStorage.setItem('tokenExpiration', action.payload.expiration)
+      localStorage.setItem('userRole', action.payload.role)
+      localStorage.setItem('username', action.payload.userName)
     },
 
     logout: (state) => {

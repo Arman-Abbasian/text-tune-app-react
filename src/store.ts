@@ -3,6 +3,7 @@ import { Admin } from './services/Admin'
 import { Authentication } from './services/Authentication'
 import { User } from './services/User'
 import authSlice from './features/authSlice'
+import { Home } from './services/Home'
 
 // import سایر slice ها
 
@@ -17,12 +18,14 @@ export const makeStore = () =>
       [User.reducerPath]: User.reducer,
       [Admin.reducerPath]: Admin.reducer,
       [Authentication.reducerPath]: Authentication.reducer,
+      [Home.reducerPath]: Home.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
         User.middleware,
         Admin.middleware,
-        Authentication.middleware
+        Authentication.middleware,
+        Home.middleware
       ),
   })
 

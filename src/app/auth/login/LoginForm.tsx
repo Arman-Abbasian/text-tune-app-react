@@ -7,6 +7,7 @@ import { handleMutationApiCall } from '../../../utils/handleMutationApiCall'
 import { useDispatch } from 'react-redux'
 import { login } from '../../../features/authSlice'
 import { useNavigate } from 'react-router-dom'
+import type { LoginRes } from '../../../services/types/Authentication'
 
 type LoginFormPropsType = {
   username: string
@@ -21,7 +22,7 @@ export default function LoginForm() {
   let navigate = useNavigate()
   const [Login, { isLoading: LoginLoading }] = useLoginMutation()
   const submitHandler = async () => {
-    await handleMutationApiCall<any>(
+    await handleMutationApiCall<LoginRes>(
       () =>
         Login({
           userName: formData.username,
@@ -32,17 +33,13 @@ export default function LoginForm() {
       (data) => {
         dispatch(
           login({
-            username: data?.fullName || '',
-            userRole: data?.userRole || '',
+            userName: data?.userName || '',
+            role: data?.role || '',
             token: data?.token || '',
-            expiration: data?.expiration || '',
           })
         )
-        if (data?.userRole === 'Admin') navigate('/admin')
+        if (data?.role === 'Admin') navigate('/admin')
         else navigate('/user')
-      },
-      (response) => {
-        console.log('Error:', response)
       }
     )
   }
@@ -70,6 +67,7 @@ export default function LoginForm() {
           value={formData.password}
           placeholder="رمز عبور"
           className="flex-1"
+          type="password"
           icon={<Eye className="icon-small text-primary-900" />}
         />
         <ButtonComp
