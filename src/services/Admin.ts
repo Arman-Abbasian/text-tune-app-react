@@ -108,7 +108,7 @@ export const Admin = createApi({
       query: () => {
         return {
           url: `/Admin/GetAdminLandingPageStatistics`,
-          method: "GET",
+          method: "POST",
         };
       },
       providesTags: ["Admin"],
@@ -120,5 +120,6 @@ export const {
   useAddOrUpdateTrainingTextsMutation,
   useConfirmOrUnconfirmedTrainingVoiceMutation,
   useGetFilteredTrainingTextsQuery,
+  useGetAdminLandingPageStatisticsQuery,
   useLazyGetFilteredTrainingTextsQuery,
 } = Admin;

@@ -1,18 +1,29 @@
+import { useGetAdminLandingPageStatisticsQuery } from "@/services/Admin";
 import LottieWrapper from "../../components/Lottie";
 import Barchart from "../../ui/Barchart";
 import NavigateLink from "../../ui/NavigateLink";
 import StatiscticsCart from "../../ui/StatiscticsCart";
 
-const data = [
-  { x: "کاربر 1", y: 4000 },
-  { x: "کاربر 2", y: 3000 },
-  { x: "کاربر 3", y: 2000 },
-  { x: "کاربر 4", y: 2780 },
-  { x: "کاربر 5", y: 1890 },
-  { x: "کاربر 6", y: 2390 },
-  { x: "کاربر 7", y: 3490 },
-];
 export default function AdminHome() {
+  const {
+    data: GetAdminLandingPageStatistics,
+    isLoading: GetAdminLandingPageStatisticsLoading,
+  } = useGetAdminLandingPageStatisticsQuery();
+
+  const adminTexts = () => {
+    return GetAdminLandingPageStatistics?.data?.adminLandingPageAdminStatisticsDtoList.map(
+      (item) => {
+        return { x: item.userName, y: item.submitedTextCount };
+      }
+    );
+  };
+  const userSubmittedVoices = () => {
+    return GetAdminLandingPageStatistics?.data?.adminLandingPageUserStatisticsDtoList.map(
+      (item) => {
+        return { x: item.userName, y: item.submitedVoiceCount };
+      }
+    );
+  };
   return (
     <div className="flex flex-col items-center gap-10 max-w-6xl mx-auto">
       <div className="flex items-center gpa-2">
@@ -28,56 +39,78 @@ export default function AdminHome() {
       </div>
       <div className="grid grid-cols-12 gap-6">
         <StatiscticsCart
-          statistics={15210}
-          title="تعداد وویس های ضبط شده تا به حال"
+          statistics={Number(
+            GetAdminLandingPageStatistics?.data?.confirmedVoicesCount
+          )}
+          title="تعداد وویس های تایید شده"
           className="!bg-primary-300/20 col-span-12 sm:col-span-6 lg:col-span-3"
+          loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
-          statistics={15210}
-          title="تعداد وویس های ضبط شده تا به حال"
+          statistics={Number(
+            GetAdminLandingPageStatistics?.data?.notConfirmedVoicesCount
+          )}
+          title="تعداد وویس های تایید نشده"
           className="!bg-secondary-300/20 col-span-12 sm:col-span-6 lg:col-span-3"
+          loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
-          statistics={420}
-          title="تعداد وویس های ضبط شده تا به حال"
+          statistics={Number(GetAdminLandingPageStatistics?.data?.textsCount)}
+          title="تعداد کل متن ها"
           className="!bg-success/20 col-span-12 sm:col-span-6 lg:col-span-3"
+          loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
-          statistics={246574}
-          title="تعداد وویس های ضبط شده تا به حال"
+          statistics={Number(
+            GetAdminLandingPageStatistics?.data?.textsCountForCurrentUser
+          )}
+          title="تعداد متن های ثبت شما توسط شما "
           className="!bg-danger/20 col-span-12 sm:col-span-6 lg:col-span-3"
+          loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
-          statistics={15210}
-          title="تعداد وویس های ضبط شده تا به حال"
+          statistics={Number(
+            GetAdminLandingPageStatistics?.data?.textsWithNoVoiceCount
+          )}
+          title="تعداد متن های بدون ویس "
           className="!bg-primary-300/20 col-span-12 sm:col-span-6 lg:col-span-3"
+          loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
-          statistics={15210}
-          title="تعداد وویس های ضبط شده تا به حال"
+          statistics={Number(
+            GetAdminLandingPageStatistics?.data?.textsWithVoiceCount
+          )}
+          title="تعداد متن های دارای ویس "
           className="!bg-secondary-300/20 col-span-12 sm:col-span-6 lg:col-span-3"
+          loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
-          statistics={420}
-          title="تعداد وویس های ضبط شده تا به حال"
+          statistics={Number(
+            GetAdminLandingPageStatistics?.data?.undeterminedVoicesCount
+          )}
+          title="تعداد وویس های در انتظار بررسی"
           className="!bg-success/20 col-span-12 sm:col-span-6 lg:col-span-3"
+          loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
-          statistics={246574}
-          title="تعداد وویس های ضبط شده تا به حال"
+          statistics={Number(GetAdminLandingPageStatistics?.data?.voicesCount)}
+          title="تعداد کل ویس ها "
           className="!bg-danger/20 col-span-12 sm:col-span-6 lg:col-span-3"
+          loading={GetAdminLandingPageStatisticsLoading}
         />
       </div>
       <div className="grid grid-cols-2  w-full gap-4">
         <Barchart
-          data={data}
-          chartTitle="تعداد وویس هر کاربر"
+          data={userSubmittedVoices() || []}
+          chartTitle="تعداد ویس تایید شده هر کاربر"
           className="lg:col-span-1"
+          isLoading={GetAdminLandingPageStatisticsLoading}
         />
         <Barchart
-          data={data}
+          data={adminTexts() || []}
           chartTitle="تعداد متن هر ادمین"
           className="lg:col-span-1"
+          isLoading={GetAdminLandingPageStatisticsLoading}
         />
       </div>
     </div>
