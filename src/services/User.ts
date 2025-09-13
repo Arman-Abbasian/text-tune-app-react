@@ -1,21 +1,24 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-import baseQuery from './baseQuery'
-import type { GetFilteredTrainingTextsWithCurrentUserVoice } from './types/User'
+//libraries
+import { createApi } from "@reduxjs/toolkit/query/react";
+//store
+import baseQuery from "./baseQuery";
+//types
+import type { GetFilteredTrainingTextsWithCurrentUserVoice } from "./types/User";
 
 export const User = createApi({
-  reducerPath: 'User',
+  reducerPath: "User",
   baseQuery: baseQuery,
-  tagTypes: ['User'],
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     // Create
 
     AddOrUpdateTrainingTextVoices: builder.mutation<any, FormData>({
       query: (formData) => ({
         url: `User/AddOrUpdateTrainingTextVoices`,
-        method: 'POST',
+        method: "POST",
         body: formData,
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: ["User"],
     }),
 
     GetFilteredTrainingTextsWithCurrentUserVoice: builder.query<
@@ -23,36 +26,36 @@ export const User = createApi({
       GetFilteredTrainingTextsWithCurrentUserVoice
     >({
       query: ({ isActiveText, isConfirmedVoice }) => {
-        const params = new URLSearchParams()
+        const params = new URLSearchParams();
 
-        params.append('isActiveText', String(isActiveText))
+        params.append("isActiveText", String(isActiveText));
 
-        if (isConfirmedVoice !== 'null') {
-          params.append('isConfirmed', isConfirmedVoice)
+        if (isConfirmedVoice !== "null") {
+          params.append("isConfirmed", isConfirmedVoice);
         }
         return {
           url: `User/GetFilteredTrainingTextsWithCurrentUserVoice?${params}`,
-          method: 'POST',
-        }
+          method: "POST",
+        };
       },
-      providesTags: ['User'],
+      providesTags: ["User"],
     }),
 
     GetFilteredTrainingVoices: builder.query<any, void>({
       query: () => {
         return {
           url: `User/GetFilteredTrainingVoices`,
-          method: 'POST',
-        }
+          method: "POST",
+        };
       },
-      providesTags: ['User'],
+      providesTags: ["User"],
     }),
   }),
-})
+});
 
 export const {
   useAddOrUpdateTrainingTextVoicesMutation,
   useGetFilteredTrainingVoicesQuery,
   useGetFilteredTrainingTextsWithCurrentUserVoiceQuery,
   useLazyGetFilteredTrainingTextsWithCurrentUserVoiceQuery,
-} = User
+} = User;

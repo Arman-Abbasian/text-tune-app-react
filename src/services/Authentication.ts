@@ -1,32 +1,35 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-import baseQuery from './baseQuery'
-import type { Login, LoginRes, Register } from './types/Authentication'
-import type { ApiResponse } from './types/globalSerivicesType'
+//libraries
+import { createApi } from "@reduxjs/toolkit/query/react";
+//store
+import baseQuery from "./baseQuery";
+//types
+import type { Login, LoginRes, Register } from "./types/Authentication";
+import type { ApiResponse } from "./types/globalSerivicesType";
 
 export const Authentication = createApi({
-  reducerPath: 'Authentication',
+  reducerPath: "Authentication",
   baseQuery: baseQuery,
-  tagTypes: ['Authentication'],
+  tagTypes: ["Authentication"],
   endpoints: (builder) => ({
     // Create
     Login: builder.mutation<ApiResponse<LoginRes>, Login>({
       query: (body) => ({
         url: `Authentication/Login`,
-        method: 'POST',
+        method: "POST",
         body,
       }),
-      invalidatesTags: ['Authentication'],
+      invalidatesTags: ["Authentication"],
     }),
 
     Register: builder.mutation<any, Register>({
       query: (body) => ({
         url: `Authentication/Register`,
-        method: 'POST',
+        method: "POST",
         body,
       }),
-      invalidatesTags: ['Authentication'],
+      invalidatesTags: ["Authentication"],
     }),
   }),
-})
+});
 
-export const { useLoginMutation, useRegisterMutation } = Authentication
+export const { useLoginMutation, useRegisterMutation } = Authentication;

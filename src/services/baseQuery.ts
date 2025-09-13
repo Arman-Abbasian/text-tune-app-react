@@ -1,45 +1,47 @@
-import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+//libraries
+import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+//types
 import type {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
-} from '@reduxjs/toolkit/query'
+} from "@reduxjs/toolkit/query";
 
 declare global {
   interface Window {
     APP_CONFIG: {
-      API_BASE_URL: string
-    }
+      API_BASE_URL: string;
+    };
   }
   interface Navigator {
-    standalone?: boolean
+    standalone?: boolean;
   }
 }
 
 // Helper function برای پاک کردن توکن
 const clearTokenFromLocalStorage = (): void => {
-  localStorage.removeItem('token')
-  localStorage.removeItem('tokenExpiration')
-}
+  localStorage.removeItem("token");
+  localStorage.removeItem("tokenExpiration");
+};
 
 // Helper function برای redirect به login
 const redirectToLogin = (): void => {
   // جلوگیری از infinite redirect loop
-  if (!window.location.pathname.includes('/auth/login')) {
-    window.location.href = '/auth/login'
+  if (!window.location.pathname.includes("/auth/login")) {
+    window.location.href = "/auth/login";
   }
-}
+};
 
 const baseQuery = fetchBaseQuery({
   baseUrl: window.APP_CONFIG.API_BASE_URL,
   prepareHeaders: (headers) => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
     if (token) {
-      headers.set('Authorization', `Bearer ${token}`)
+      headers.set("Authorization", `Bearer ${token}`);
     }
-    return headers
+    return headers;
   },
-})
+});
 
 // Wrapper برای handle کردن authentication errors
 const baseQueryWithReauth: BaseQueryFn<
@@ -47,14 +49,14 @@ const baseQueryWithReauth: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  const result = await baseQuery(args, api, extraOptions)
+  const result = await baseQuery(args, api, extraOptions);
 
   if (result.error?.status === 401) {
-    clearTokenFromLocalStorage()
-    redirectToLogin()
+    clearTokenFromLocalStorage();
+    redirectToLogin();
   }
 
-  return result
-}
+  return result;
+};
 
-export default baseQueryWithReauth
+export default baseQueryWithReauth;

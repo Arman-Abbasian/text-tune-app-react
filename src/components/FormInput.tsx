@@ -1,34 +1,37 @@
-import { Eye, EyeClosedIcon } from 'lucide-react'
-import React, { useState } from 'react'
-import type { FieldError, FieldValues, UseFormRegister } from 'react-hook-form'
+//icons
+import { Eye, EyeClosedIcon } from "lucide-react";
+//hooks
+import React, { useState } from "react";
+//types
+import type { FieldError, FieldValues, UseFormRegister } from "react-hook-form";
 
-type InputType = 'text' | 'number' | 'password' | 'email' | 'tel'
+type InputType = "text" | "number" | "password" | "email" | "tel";
 
 interface FormInputProps {
-  name: string
-  label?: string
-  placeholder?: string
-  type?: InputType
-  icon?: React.ReactNode
-  register: UseFormRegister<FieldValues>
-  error?: FieldError
-  className?: string
-  showTogglePassword?: boolean
+  name: string;
+  label?: string;
+  placeholder?: string;
+  type?: InputType;
+  icon?: React.ReactNode;
+  register: UseFormRegister<FieldValues>;
+  error?: FieldError;
+  className?: string;
+  showTogglePassword?: boolean;
 }
 
 export default function FormInput({
   name,
   label,
   placeholder,
-  type = 'text',
+  type = "text",
   icon,
   register,
   error,
-  className = '',
+  className = "",
   showTogglePassword = false,
 }: FormInputProps) {
-  const [showPassword, setShowPassword] = useState(false)
-  const isPassword = type === 'password'
+  const [showPassword, setShowPassword] = useState(false);
+  const isPassword = type === "password";
 
   return (
     <div className={`!w-full ${className}`}>
@@ -40,7 +43,7 @@ export default function FormInput({
 
       <div
         className={`flex justify-between items-center gap-2 w-full px-5 py-3 border rounded-2xl bg-primary-100 ${
-          error ? 'border-danger' : 'border-secondary-300'
+          error ? "border-danger" : "border-secondary-300"
         }`}
       >
         <input
@@ -48,12 +51,12 @@ export default function FormInput({
           type={
             isPassword && showTogglePassword
               ? showPassword
-                ? 'text'
-                : 'password'
+                ? "text"
+                : "password"
               : type
           }
           placeholder={placeholder}
-          dir={'rtl'}
+          dir={"rtl"}
           className={`flex-1 text-secondary-900 focus:outline-none placeholder:text-xs placeholder:text-secondary-300`}
         />
 
@@ -75,5 +78,5 @@ export default function FormInput({
 
       {error && <p className="mt-1 text-sm text-danger">{error.message}</p>}
     </div>
-  )
+  );
 }

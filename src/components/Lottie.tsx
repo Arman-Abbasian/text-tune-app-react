@@ -1,13 +1,14 @@
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+//libraries
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 type LottiePropsType = {
-  src: string
-  loop: boolean
-  autoplay: boolean
-  className: string
-}
+  src: string;
+  loop: boolean;
+  autoplay: boolean;
+  className: string;
+};
 export default function LottieWrapper(props: LottiePropsType) {
-  const { autoplay = true, className = '', loop = true, src } = props
+  const { autoplay = true, className = "", loop = true, src } = props;
   return (
     <DotLottieReact
       src={src}
@@ -15,5 +16,5 @@ export default function LottieWrapper(props: LottiePropsType) {
       autoplay={autoplay}
       className={className}
     />
-  )
+  );
 }

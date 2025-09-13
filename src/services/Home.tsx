@@ -1,12 +1,15 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-import baseQuery from './baseQuery'
-import type { ApiResponse } from './types/globalSerivicesType'
-import type { GetUserInfo } from './types/Home'
+//libraries
+import { createApi } from "@reduxjs/toolkit/query/react";
+//store
+import baseQuery from "./baseQuery";
+//types
+import type { ApiResponse } from "./types/globalSerivicesType";
+import type { GetUserInfo } from "./types/Home";
 
 export const Home = createApi({
-  reducerPath: 'Home',
+  reducerPath: "Home",
   baseQuery: baseQuery,
-  tagTypes: ['Home'],
+  tagTypes: ["Home"],
   endpoints: (builder) => ({
     // Read
 
@@ -14,12 +17,12 @@ export const Home = createApi({
       query: () => {
         return {
           url: `Home/GetUserInfo`,
-          method: 'POST',
-        }
+          method: "POST",
+        };
       },
-      providesTags: ['Home'],
+      providesTags: ["Home"],
     }),
   }),
-})
+});
 
-export const { useGetUserInfoQuery } = Home
+export const { useGetUserInfoQuery } = Home;

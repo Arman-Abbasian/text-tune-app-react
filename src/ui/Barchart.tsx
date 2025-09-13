@@ -1,21 +1,12 @@
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  LabelList,
-} from 'recharts'
+//libraries
+import { BarChart, Bar, XAxis, ResponsiveContainer, LabelList } from "recharts";
 
 interface BarchartPropsType {
-  data: { x: string; y: number }[]
-  chartTitle: string
+  data: { x: string; y: number }[];
+  chartTitle: string;
 }
 export default function Barchart(props: BarchartPropsType) {
-  const { data, chartTitle } = props
+  const { data, chartTitle } = props;
   return (
     <div className="w-full">
       <h2 className="text-xl font-bold text-center mb-2 text-secondary-700">
@@ -24,7 +15,7 @@ export default function Barchart(props: BarchartPropsType) {
       <ResponsiveContainer
         width="100%"
         height={400}
-        className={'p-4 bg-primary-700/30 rounded-lg '}
+        className={"p-4 bg-primary-700/30 rounded-lg "}
       >
         <BarChart
           data={data}
@@ -46,5 +37,5 @@ export default function Barchart(props: BarchartPropsType) {
         </BarChart>
       </ResponsiveContainer>
     </div>
-  )
+  );
 }

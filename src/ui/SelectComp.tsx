@@ -1,3 +1,4 @@
+//components
 import {
   Select,
   SelectContent,
@@ -5,23 +6,23 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../components/ui/select'
+} from "@/components/ui/select";
 
 type OptionType = {
-  name: string
-  value: string
-}
+  name: string;
+  value: string;
+};
 
 type SelectCompPropsType = {
-  options: OptionType[]
-  className?: string
-  name: string
-  value: string
-  onChange: (e: any) => void
-}
+  options: OptionType[];
+  className?: string;
+  name: string;
+  value: string;
+  onChange: (e: any) => void;
+};
 
 export default function SelectComp(props: SelectCompPropsType) {
-  const { options, className, name, value, onChange } = props
+  const { options, className, name, value, onChange } = props;
   return (
     <Select value={value} onValueChange={onChange} name={name}>
       <SelectTrigger
@@ -41,10 +42,10 @@ export default function SelectComp(props: SelectCompPropsType) {
               >
                 {option.name}
               </SelectItem>
-            )
+            );
           })}
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }

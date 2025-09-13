@@ -1,17 +1,17 @@
-import DatePicker from 'react-multi-date-picker'
-
-import persian from 'react-date-object/calendars/persian'
-import persian_fa from 'react-date-object/locales/persian_fa'
-import type DateObject from 'react-date-object'
+//libraries
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import type DateObject from "react-date-object";
 
 interface DatePickerCompPropsType {
-  value: string | null
-  onChange: (data: DateObject | null) => void
-  name: string
-  placeholder?: string
+  value: string | null;
+  onChange: (data: DateObject | null) => void;
+  name: string;
+  placeholder?: string;
 }
 export default function DatePickerComp(props: DatePickerCompPropsType) {
-  const { onChange, value, name, placeholder } = props
+  const { onChange, value, name, placeholder } = props;
   return (
     <DatePicker
       calendar={persian}
@@ -22,5 +22,5 @@ export default function DatePickerComp(props: DatePickerCompPropsType) {
       value={value}
       onChange={onChange}
     />
-  )
+  );
 }

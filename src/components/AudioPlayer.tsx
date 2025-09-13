@@ -1,66 +1,70 @@
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
-import { Download } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
-import { useAddOrUpdateTrainingTextVoicesMutation } from '../services/User'
-import ImageComp from '../ui/ImageComp'
-import ButtonComp from '../ui/ButtonComp'
+//libraries
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { Download } from "lucide-react";
+//hooks
+import { useEffect, useRef, useState } from "react";
+//stores
+import { useAddOrUpdateTrainingTextVoicesMutation } from "../services/User";
+//components
+import ImageComp from "@/ui/ImageComp";
+import ButtonComp from "@/ui/ButtonComp";
 
 type AudioPlayerPropsType = {
-  audioUrl: string
-  id: string
-  blobFile: Blob | null
-}
+  audioUrl: string;
+  id: string;
+  blobFile: Blob | null;
+};
 
 export default function AudioPlayer(props: AudioPlayerPropsType) {
-  const { audioUrl, id, blobFile } = props
+  const { audioUrl, id, blobFile } = props;
 
-  const audioRef = useRef<HTMLAudioElement>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const [
     AddOrUpdateTrainingTextVoices,
     { isLoading: AddOrUpdateTrainingTextVoicesLoading },
-  ] = useAddOrUpdateTrainingTextVoicesMutation()
+  ] = useAddOrUpdateTrainingTextVoicesMutation();
 
   useEffect(() => {
-    const audioEl = audioRef.current
-    if (!audioEl) return
+    const audioEl = audioRef.current;
+    if (!audioEl) return;
 
     const handleEnded = () => {
-      setIsPlaying(false)
-    }
+      setIsPlaying(false);
+    };
 
-    audioEl.addEventListener('ended', handleEnded)
+    audioEl.addEventListener("ended", handleEnded);
 
     return () => {
-      audioEl.removeEventListener('ended', handleEnded)
-    }
-  }, [])
+      audioEl.removeEventListener("ended", handleEnded);
+    };
+  }, []);
 
   const togglePlay = () => {
-    if (!audioRef.current) return
+    if (!audioRef.current) return;
     if (isPlaying) {
-      audioRef.current.pause()
+      audioRef.current.pause();
     } else {
-      audioRef.current.play()
+      audioRef.current.play();
     }
-    setIsPlaying(!isPlaying)
-  }
+    setIsPlaying(!isPlaying);
+  };
 
   const sendVoiceHandler = () => {
     if (!blobFile) {
-      alert('هیچ صدایی ضبط نشده')
-      return
+      alert("هیچ صدایی ضبط نشده");
+      return;
     }
 
-    const formData = new FormData()
-    formData.append('formFile', blobFile, 'recording.webm')
-    formData.append('Id', id)
-    formData.append('TrainingTextId', id)
-    formData.append('InsertedUserDescription', '')
+    const formData = new FormData();
+    formData.append("formFile", blobFile, "recording.webm");
+    formData.append("Id", id);
+    formData.append("TrainingTextId", id);
+    formData.append("InsertedUserDescription", "");
 
-    AddOrUpdateTrainingTextVoices(formData)
-  }
+    AddOrUpdateTrainingTextVoices(formData);
+  };
 
   return (
     <div className="bg-primary-100 rounded-lg shadow-2xl drop-shadow-2xl p-2 flex flex-col items-center gap-2 w-64">
@@ -104,5 +108,5 @@ export default function AudioPlayer(props: AudioPlayerPropsType) {
       {/* Hidden audio element */}
       <audio ref={audioRef} src={audioUrl} />
     </div>
-  )
+  );
 }

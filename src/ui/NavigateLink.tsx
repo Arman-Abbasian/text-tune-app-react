@@ -1,12 +1,14 @@
-import { ArrowRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+//icons
+import { ArrowRight } from "lucide-react";
+//libraries
+import { Link } from "react-router-dom";
 
 interface NavigateLinkPropsType {
-  to: string
-  name: string
+  to: string;
+  name: string;
 }
 export default function NavigateLink(props: NavigateLinkPropsType) {
-  const { name, to } = props
+  const { name, to } = props;
   return (
     <div>
       <Link
@@ -17,5 +19,5 @@ export default function NavigateLink(props: NavigateLinkPropsType) {
         <p>{name}</p>
       </Link>
     </div>
-  )
+  );
 }

@@ -1,5 +1,7 @@
-import type { ApiResponse } from '../services/types/globalSerivicesType'
-import { RejectToast, SuccessToast } from '../ui/Toasts'
+//store
+import type { ApiResponse } from "@/services/types/globalSerivicesType";
+//components
+import { RejectToast, SuccessToast } from "@/ui/Toasts";
 
 export const handleMutationApiCall = async <T>(
   apiCall: () => Promise<ApiResponse<T>>,
@@ -9,18 +11,18 @@ export const handleMutationApiCall = async <T>(
   errorMessage?: string
 ) => {
   try {
-    const response = await apiCall()
+    const response = await apiCall();
     if (response.isSuccess) {
-      onSuccess?.(response.data)
+      onSuccess?.(response.data);
       SuccessToast(
-        response.message || successMessage || 'عملیات با موفقیت انجام شد'
-      )
+        response.message || successMessage || "عملیات با موفقیت انجام شد"
+      );
     } else if (!response.isSuccess) {
-      onError?.(response.data)
-      RejectToast(response?.message || errorMessage || 'عملیات انجام نشد')
+      onError?.(response.data);
+      RejectToast(response?.message || errorMessage || "عملیات انجام نشد");
     }
   } catch (error: any) {
-    if (error.status === 401) RejectToast('لطفا وارد شوید')
-    else RejectToast('مشکلی رخ داده است')
+    if (error.status === 401) RejectToast("لطفا وارد شوید");
+    else RejectToast("مشکلی رخ داده است");
   }
-}
+};
