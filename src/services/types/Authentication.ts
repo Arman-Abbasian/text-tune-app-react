@@ -1,18 +1,18 @@
 export interface Login {
-  userName: string
-  passWord: string
-  rememberMe: true
+  userName: string;
+  passWord: string;
+  rememberMe: true;
 }
 
 export interface LoginRes {
-  token: string
-  role: string
-  userName: string
+  token: string;
+  roles: string[];
+  userName: string;
 }
 
 export interface Register {
-  email: string
-  userName: string
-  passWord: string
-  rePassWord: string
+  email: string;
+  userName: string;
+  passWord: string;
+  rePassWord: string;
 }

@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { login } from "../../../features/authSlice";
 import { useNavigate } from "react-router-dom";
 import type { LoginRes } from "../../../services/types/Authentication";
-import { jwtDecode } from "jwt-decode";
 
 type LoginFormPropsType = {
   username: string;
@@ -35,11 +34,11 @@ export default function LoginForm() {
         dispatch(
           login({
             userName: data?.userName || "",
-            role: data?.role || "",
+            role: data?.roles[0] || "",
             token: data?.token || "",
           })
         );
-        if (data?.role === "Admin") navigate("/admin");
+        if (data?.roles.includes("Admin")) navigate("/admin");
         else navigate("/user");
       }
     );

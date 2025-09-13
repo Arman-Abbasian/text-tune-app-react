@@ -4,6 +4,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQuery from "./baseQuery";
 //types
 import type { GetFilteredTrainingTextsWithCurrentUserVoice } from "./types/User";
+import type { AddOrUpdateTrainingTextsRes } from "./types/Admin";
 
 export const User = createApi({
   reducerPath: "User",
@@ -21,30 +22,19 @@ export const User = createApi({
       invalidatesTags: ["User"],
     }),
 
-    GetFilteredTrainingTextsWithCurrentUserVoice: builder.query<
-      any,
+    GetFilteredTrainingVoices: builder.query<
+      AddOrUpdateTrainingTextsRes[],
       GetFilteredTrainingTextsWithCurrentUserVoice
     >({
-      query: ({ isActiveText, isConfirmedVoice }) => {
+      query: ({ isConfirmedVoice, isActiveText = true }) => {
         const params = new URLSearchParams();
 
         params.append("isActiveText", String(isActiveText));
-
         if (isConfirmedVoice !== "null") {
-          params.append("isConfirmed", isConfirmedVoice);
+          params.append("isConfirmedVoice", isConfirmedVoice);
         }
         return {
           url: `User/GetFilteredTrainingTextsWithCurrentUserVoice?${params}`,
-          method: "POST",
-        };
-      },
-      providesTags: ["User"],
-    }),
-
-    GetFilteredTrainingVoices: builder.query<any, void>({
-      query: () => {
-        return {
-          url: `User/GetFilteredTrainingVoices`,
           method: "POST",
         };
       },
@@ -56,6 +46,5 @@ export const User = createApi({
 export const {
   useAddOrUpdateTrainingTextVoicesMutation,
   useGetFilteredTrainingVoicesQuery,
-  useGetFilteredTrainingTextsWithCurrentUserVoiceQuery,
-  useLazyGetFilteredTrainingTextsWithCurrentUserVoiceQuery,
+  useLazyGetFilteredTrainingVoicesQuery,
 } = User;

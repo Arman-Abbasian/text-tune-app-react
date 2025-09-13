@@ -37,7 +37,7 @@ export default function AdminHome() {
 
         <NavigateLink name="افزودن متن" to="/admin/addText" />
       </div>
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-6 w-full">
         <StatiscticsCart
           statistics={Number(
             GetAdminLandingPageStatistics?.data?.confirmedVoicesCount
@@ -103,13 +103,13 @@ export default function AdminHome() {
         <Barchart
           data={userSubmittedVoices() || []}
           chartTitle="تعداد ویس تایید شده هر کاربر"
-          className="lg:col-span-1"
+          className="col-span-2 lg:col-span-1"
           isLoading={GetAdminLandingPageStatisticsLoading}
         />
         <Barchart
           data={adminTexts() || []}
           chartTitle="تعداد متن هر ادمین"
-          className="lg:col-span-1"
+          className="col-span-2 lg:col-span-1"
           isLoading={GetAdminLandingPageStatisticsLoading}
         />
       </div>
