@@ -1,29 +1,40 @@
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
-import { useState } from 'react'
-import { useAddOrUpdateTrainingTextsMutation } from '../../../services/Admin'
-import ArrowBackComp from '../../../ui/ArrowBackComp'
-import InputTags from '../../../components/InputTags'
-import TextAreaComp from '../../../components/TextAreaComp'
-import ButtonComp from '../../../ui/ButtonComp'
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { useState } from "react";
+import { useAddOrUpdateTrainingTextsMutation } from "../../../services/Admin";
+import ArrowBackComp from "../../../ui/ArrowBackComp";
+import InputTags from "../../../components/InputTags";
+import TextAreaComp from "../../../components/TextAreaComp";
+import ButtonComp from "../../../ui/ButtonComp";
+import { handleMutationApiCall } from "@/utils/handleMutationApiCall";
 
 export default function AddTextForm() {
-  const [tags, setTags] = useState<string[]>([])
-  const [text, setText] = useState('')
+  const [tags, setTags] = useState<string[]>([]);
+  const [text, setText] = useState("");
 
   const [
     AddOrUpdateTrainingTexts,
     { isLoading: AddOrUpdateTrainingTextsLoading },
-  ] = useAddOrUpdateTrainingTextsMutation()
+  ] = useAddOrUpdateTrainingTextsMutation();
 
-  const submitHanlder = () => {
-    AddOrUpdateTrainingTexts({
-      text: text,
-      isActive: true,
-      addOrUpdateTrainingTextKeywordDtoList: tags.map((tag) => ({
-        keyword: tag,
-      })),
-    })
-  }
+  const submitHandler = async () => {
+    await handleMutationApiCall(
+      () =>
+        AddOrUpdateTrainingTexts({
+          text,
+          isActive: true,
+          addOrUpdateTrainingTextKeywordDtoList: tags.map((tag) => ({
+            keyword: tag,
+          })),
+        }).unwrap(),
+      (data: any) => {
+        console.log(data);
+        setTags([]);
+        setText("");
+      },
+      () => {},
+      "فرم با موفقیت ثبت شد"
+    );
+  };
   return (
     <div className="max-w-md mx-auto flex flex-col gap-8  p-4 bg-white/30 backdrop-blur-xs rounded-lg relative">
       <ArrowBackComp href="/admin" className="absolute left-2 top-2" />
@@ -48,11 +59,15 @@ export default function AddTextForm() {
         isFormButton={true}
         canClick={true}
         type="submit"
-        disabled={tags.length === 0 || text.trim() === ''}
+        disabled={
+          tags.length === 0 ||
+          text.trim() === "" ||
+          AddOrUpdateTrainingTextsLoading
+        }
         loading={AddOrUpdateTrainingTextsLoading}
         text="افزودن"
-        onsubmit={submitHanlder}
+        onsubmit={submitHandler}
       />
     </div>
-  )
+  );
 }

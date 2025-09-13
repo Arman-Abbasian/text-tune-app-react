@@ -1,26 +1,27 @@
-import { Eye, UserIcon } from 'lucide-react'
-import { useState } from 'react'
-import { useLoginMutation } from '../../../services/Authentication'
-import TextInputComp from '../../../components/TextInputComp'
-import ButtonComp from '../../../ui/ButtonComp'
-import { handleMutationApiCall } from '../../../utils/handleMutationApiCall'
-import { useDispatch } from 'react-redux'
-import { login } from '../../../features/authSlice'
-import { useNavigate } from 'react-router-dom'
-import type { LoginRes } from '../../../services/types/Authentication'
+import { Eye, UserIcon } from "lucide-react";
+import { useState } from "react";
+import { useLoginMutation } from "../../../services/Authentication";
+import TextInputComp from "../../../components/TextInputComp";
+import ButtonComp from "../../../ui/ButtonComp";
+import { handleMutationApiCall } from "../../../utils/handleMutationApiCall";
+import { useDispatch } from "react-redux";
+import { login } from "../../../features/authSlice";
+import { useNavigate } from "react-router-dom";
+import type { LoginRes } from "../../../services/types/Authentication";
+import { jwtDecode } from "jwt-decode";
 
 type LoginFormPropsType = {
-  username: string
-  password: string
-}
+  username: string;
+  password: string;
+};
 export default function LoginForm() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState<LoginFormPropsType>({
-    username: '',
-    password: '',
-  })
-  let navigate = useNavigate()
-  const [Login, { isLoading: LoginLoading }] = useLoginMutation()
+    username: "",
+    password: "",
+  });
+  let navigate = useNavigate();
+  const [Login, { isLoading: LoginLoading }] = useLoginMutation();
   const submitHandler = async () => {
     await handleMutationApiCall<LoginRes>(
       () =>
@@ -33,20 +34,20 @@ export default function LoginForm() {
       (data) => {
         dispatch(
           login({
-            userName: data?.userName || '',
-            role: data?.role || '',
-            token: data?.token || '',
+            userName: data?.userName || "",
+            role: data?.role || "",
+            token: data?.token || "",
           })
-        )
-        if (data?.role === 'Admin') navigate('/admin')
-        else navigate('/user')
+        );
+        if (data?.role === "Admin") navigate("/admin");
+        else navigate("/user");
       }
-    )
-  }
+    );
+  };
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="flex flex-col justify-center items-center gap-8 w-full h-full">
@@ -78,10 +79,10 @@ export default function LoginForm() {
           onsubmit={submitHandler}
           loading={LoginLoading}
           disabled={
-            formData.username === '' || formData.password === '' || LoginLoading
+            formData.username === "" || formData.password === "" || LoginLoading
           }
         />
       </div>
     </div>
-  )
+  );
 }

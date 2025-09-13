@@ -1,7 +1,14 @@
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
-import { CircleCheckBig, CircleX, Eye } from 'lucide-react'
-import { useState } from 'react'
-import { useConfirmOrUnconfirmedTrainingVoiceMutation } from '../../../services/Admin'
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import {
+  Check,
+  CircleCheckBig,
+  CircleX,
+  Eye,
+  HourglassIcon,
+  X,
+} from "lucide-react";
+import { useState } from "react";
+import { useConfirmOrUnconfirmedTrainingVoiceMutation } from "../../../services/Admin";
 import {
   Table,
   TableBody,
@@ -9,32 +16,85 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../components/ui/table'
-import TextAreaComp from '../../../components/TextAreaComp'
-import ButtonComp from '../../../ui/ButtonComp'
-import ModalComp from '../../../ui/ModalComp'
-import LottieWrapper from '../../../components/Lottie'
+} from "../../../components/ui/table";
+import TextAreaComp from "../../../components/TextAreaComp";
+import ButtonComp from "../../../ui/ButtonComp";
+import ModalComp from "../../../ui/ModalComp";
+import LottieWrapper from "../../../components/Lottie";
+import type { TrainingTextVoiceDto } from "@/services/types/Admin";
+import moment from "moment-jalaali";
+import BeatLoaderButton from "@/ui/BeatLoaderButton";
+import { RejectToast, SuccessToast } from "@/ui/Toasts";
 
 interface AdminTextVoicesTablePropsType {
-  id: string
+  item: TrainingTextVoiceDto[] | null;
+  setItem: React.Dispatch<React.SetStateAction<TrainingTextVoiceDto[] | null>>;
 }
 
 const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
-  const { id } = props
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { item, setItem } = props;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [voiceElement, setVoiceElement] = useState<TrainingTextVoiceDto | null>(
+    null
+  );
+  const [voiceComment, setVoiceComment] = useState("");
 
   const [
     ConfirmOrUnconfirmedTrainingVoice,
     { isLoading: ConfirmOrUnconfirmedTrainingVoiceLoading },
-  ] = useConfirmOrUnconfirmedTrainingVoiceMutation()
+  ] = useConfirmOrUnconfirmedTrainingVoiceMutation();
 
-  const addCommentHandler = () => {
-    ConfirmOrUnconfirmedTrainingVoice({
-      id: '1',
-      confirmationDescription: 'dsf',
-    })
-  }
-  if (!id) {
+  const addCommentHandler = async () => {
+    try {
+      const response = await ConfirmOrUnconfirmedTrainingVoice({
+        id: String(voiceElement?.id),
+        confirmationDescription: voiceComment,
+      }).unwrap();
+
+      if (response.isSuccess) {
+        SuccessToast("عملیات با موفقیت انجام شد");
+        setItem(null);
+        setVoiceComment("");
+        setVoiceElement(null);
+        setIsModalOpen(false);
+      } else {
+        RejectToast(response.message || "مشکلی رخ داده است");
+      }
+    } catch (error) {
+      RejectToast("مشکلی رخ داده است");
+    }
+  };
+  const voiceConfirmationHandler = async (
+    element: TrainingTextVoiceDto,
+    confirmation: "true" | "false"
+  ) => {
+    try {
+      const response = await ConfirmOrUnconfirmedTrainingVoice({
+        id: String(element.id),
+        isConfirmed: confirmation,
+      }).unwrap();
+      if (response.isSuccess) {
+        SuccessToast("عملیات با موفقیت انجام شد");
+        setItem(null);
+      } else {
+        RejectToast(response.message || "مشکلی رخ داده است");
+      }
+    } catch (error) {
+      RejectToast("مشکلی رخ داده است");
+    }
+  };
+
+  const voiceCommentHandler = (element: TrainingTextVoiceDto) => {
+    setIsModalOpen(true);
+    setVoiceElement(element);
+    setVoiceComment(element.confirmationDescription);
+  };
+
+  const changeCommentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setVoiceComment(e.target.value);
+  };
+
+  if (!item) {
     return (
       <div className="flex flex-col gap-8">
         <p className="text-center text-primary-900 text-2xl font-semibold">
@@ -42,10 +102,20 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
         </p>
         <LottieWrapper src="/json/click.json" loop autoplay className="h-52" />
       </div>
-    )
+    );
+  }
+  if (item.length === 0) {
+    return (
+      <div className="flex flex-col gap-8">
+        <p className="text-center text-primary-900 text-2xl font-semibold">
+          هیچ ویسی برای این متن ثبت نشده است
+        </p>
+        <LottieWrapper src="/json/click.json" loop autoplay className="h-52" />
+      </div>
+    );
   }
 
-  if (id)
+  if (item.length > 0)
     return (
       <>
         <Table className="rounded-lg overflow-hidden shadow-2xl drop-shadow-2xl">
@@ -72,27 +142,61 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
             </TableRow>
           </TableHeader>
           <TableBody className="text-primary-900 bg-primary-100">
-            {items.length === 0 ? (
-              <p>متنی جهت خواندن موجود نیست</p>
-            ) : (
-              items.map((item) => (
-                <TableRow key={item.id} className="text-primary-700">
-                  <TableCell className="text-right">{item.username}</TableCell>
-                  <TableCell className="text-center">{item.date}</TableCell>
-                  <TableCell className="text-center">{item.link}</TableCell>
-                  <TableCell className="flex justify-center text-center">
-                    <Eye onClick={() => setIsModalOpen(true)} />
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {item.condition}
-                  </TableCell>
-                  <TableCell className="flex justify-end gap-6">
-                    <CircleCheckBig className="text-success" />
-                    <CircleX className="text-danger" />
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
+            {item.map((element) => (
+              <TableRow key={element.id} className="text-primary-700">
+                <TableCell className="text-right">
+                  {element.insertedUserName}
+                </TableCell>
+                <TableCell className="text-center">
+                  {moment(element.insertedDateTime).format("jYYYY/jMM/jDD")}
+                </TableCell>
+                <TableCell className="text-center">
+                  {element.voicePath}
+                </TableCell>
+                <TableCell className="flex justify-center text-center">
+                  <Eye onClick={() => voiceCommentHandler(element)} />
+                </TableCell>
+                <TableCell className="text-center">
+                  {element.isConfirmed === true ? (
+                    <Check className="text-success" />
+                  ) : element.isConfirmed === false ? (
+                    <X className="text-red" />
+                  ) : (
+                    <HourglassIcon className="text-primary-500" />
+                  )}
+                </TableCell>
+                <TableCell className="flex justify-end gap-6">
+                  {ConfirmOrUnconfirmedTrainingVoiceLoading ? (
+                    <BeatLoaderButton color="yellow" />
+                  ) : element.isConfirmed === true ? (
+                    <CircleX
+                      className="text-danger cursor-pointer"
+                      onClick={() => voiceConfirmationHandler(element, "false")}
+                    />
+                  ) : element.isConfirmed === false ? (
+                    <CircleCheckBig
+                      className="text-success cursor-pointer"
+                      onClick={() => voiceConfirmationHandler(element, "true")}
+                    />
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <CircleCheckBig
+                        className="text-success cursor-pointer"
+                        onClick={() =>
+                          voiceConfirmationHandler(element, "true")
+                        }
+                      />
+                      <CircleX
+                        className="text-danger cursor-pointer"
+                        onClick={() =>
+                          voiceConfirmationHandler(element, "false")
+                        }
+                      />
+                    </div>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
         <ModalComp
@@ -110,7 +214,11 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
             />
           </div>
           <div className="flex flex-col gap-6">
-            <TextAreaComp placeholder="هنوز یادداشت اضافه نکرده اید..." />
+            <TextAreaComp
+              placeholder="هنوز یادداشت اضافه نکرده اید..."
+              value={voiceComment}
+              onChange={changeCommentHandler}
+            />
             <ButtonComp
               className={`flex-1 hover:bg-primary-100 hover:text-primary-700 text-secondary-100 disabled:`}
               isFormButton={true}
@@ -124,74 +232,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
           </div>
         </ModalComp>
       </>
-    )
-}
+    );
+};
 
-export default AdminTextVoicesTable
-
-const items = [
-  {
-    id: 1,
-    username: 'کامیار شیبانی',
-    link: 'https://dsfsf.com',
-    date: '1404/10/10',
-    condition: 'false',
-  },
-  {
-    id: 2,
-    username: 'علی محبی',
-    link: 'https://dsfsf.com',
-    date: '1404/10/10',
-    condition: 'false',
-  },
-  {
-    id: 3,
-    username: 'احمد جابری',
-    link: 'https://dsfsf.com',
-    date: '1404/10/10',
-    condition: 'pending',
-  },
-  {
-    id: 4,
-    username: 'رجب قنبری',
-    link: 'https://dsfsf.com',
-    date: '1404/10/10',
-    condition: 'false',
-  },
-
-  {
-    id: 5,
-    username: 'احمد لیلاز',
-    link: 'https://dsfsf.com',
-    date: '1404/10/10',
-    condition: 'true',
-  },
-  {
-    id: 6,
-    username: 'محسن حاله',
-    link: 'https://dsfsf.com',
-    date: '1404/10/10',
-    condition: 'true',
-  },
-  {
-    id: 7,
-    username: 'احمد حاله',
-    link: 'https://dsfsf.com',
-    date: '1404/10/10',
-    condition: 'true',
-  },
-  {
-    id: 8,
-    username: 'احمد حاله',
-    link: 'https://dsfsf.com',
-    date: '1404/10/10',
-    condition: 'true',
-  },
-  {
-    id: 9,
-    username: 'احمد حاله',
-    link: 'https://dsfsf.com',
-    date: '1404/10/10',
-    condition: 'true',
-  },
-]
+export default AdminTextVoicesTable;

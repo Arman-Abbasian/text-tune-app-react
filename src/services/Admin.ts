@@ -32,7 +32,7 @@ export const Admin = createApi({
     }),
     //Update
     ConfirmOrUnconfirmedTrainingVoice: builder.mutation<
-      any,
+      ApiResponse<void>,
       ConfirmOrUnconfirmedTrainingVoice
     >({
       query: ({ id, isConfirmed, confirmationDescription }) => {
@@ -95,8 +95,8 @@ export const Admin = createApi({
         }
 
         return {
-          url: `GetFilteredTrainingTexts?${params.toString()}`,
-          method: "GET",
+          url: `Admin/GetFilteredTrainingTexts?${params.toString()}`,
+          method: "POST",
         };
       },
       providesTags: ["Admin"],

@@ -6,15 +6,15 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), mkcert()],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: {
-    https: true as any,
-    host: "localhost",
-    port: 3000, // یا هر پورتی که میخوای
-  },
+  // server: {
+  //   https: true as any,
+  //   host: "localhost",
+  //   port: 3000, // یا هر پورتی که میخوای
+  // },
 });

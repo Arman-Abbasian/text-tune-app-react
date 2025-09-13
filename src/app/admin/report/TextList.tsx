@@ -1,54 +1,30 @@
-import { useEffect, useState } from 'react'
-import type { GetFilteredTrainingTexts } from '../../../services/types/Admin'
-import Filters from './Filters'
-import TextsSection from './TextsSection'
-import { useLazyGetFilteredTrainingTextsQuery } from '../../../services/Admin'
-
-// const list = [
-//   {
-//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-//   },
-//   {
-//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-//   },
-//   {
-//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-//   },
-//   {
-//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-//   },
-//   {
-//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-//   },
-//   {
-//     text: 'متنی که توسط ادمین جهت خواندن کاربران اضافه شده است',
-//     tags: ['تگ 1', 'تگ 2', 'تگ 3', 'تگ 4'],
-//   },
-// ]
+import { useEffect, useState } from "react";
+import type {
+  GetFilteredTrainingTexts,
+  TrainingTextVoiceDto,
+} from "../../../services/types/Admin";
+import Filters from "./Filters";
+import TextsSection from "./TextsSection";
+import { useLazyGetFilteredTrainingTextsQuery } from "../../../services/Admin";
 
 const initialFilters: GetFilteredTrainingTexts = {
-  isConfirmedVoice: 'null',
-  searchText: '',
+  isConfirmedVoice: "null",
+  searchText: "",
   isActiveText: true,
   shouldFilteredVoiceDateTime: true,
   startDateTime: null,
   endDateTime: null,
-}
+};
 
 interface TextListPropsType {
-  onItemSelect: (id: string) => void
+  onItemSelect: (id: TrainingTextVoiceDto[]) => void;
 }
 
 export function TextList(props: TextListPropsType) {
-  const { onItemSelect } = props
+  const { onItemSelect } = props;
 
   const [filters, setFilters] =
-    useState<GetFilteredTrainingTexts>(initialFilters)
+    useState<GetFilteredTrainingTexts>(initialFilters);
 
   const [
     LazyGetFilteredTrainingTexts,
@@ -56,21 +32,21 @@ export function TextList(props: TextListPropsType) {
       data: LazyGetFilteredTrainingTextsData,
       isFetching: LazyGetFilteredTrainingTextsLoading,
     },
-  ] = useLazyGetFilteredTrainingTextsQuery()
-
+  ] = useLazyGetFilteredTrainingTextsQuery();
+  console.log(LazyGetFilteredTrainingTextsData);
   useEffect(() => {
-    LazyGetFilteredTrainingTexts(filters)
-  }, [])
+    LazyGetFilteredTrainingTexts(filters);
+  }, []);
 
   const filtersHandler = async () => {
-    const data = await LazyGetFilteredTrainingTexts(filters).unwrap()
-    console.log(data)
-  }
+    const data = await LazyGetFilteredTrainingTexts(filters).unwrap();
+    console.log(data);
+  };
   const resetHandler = async () => {
-    setFilters(initialFilters)
-    const data = await LazyGetFilteredTrainingTexts(initialFilters).unwrap()
-    console.log(data)
-  }
+    setFilters(initialFilters);
+    const data = await LazyGetFilteredTrainingTexts(initialFilters).unwrap();
+    console.log(data);
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -92,5 +68,5 @@ export function TextList(props: TextListPropsType) {
       />
       <div className="flex flex-col flex-1 gap-4 overflow-y-auto"></div>
     </div>
-  )
+  );
 }

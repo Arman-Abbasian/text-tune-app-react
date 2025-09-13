@@ -1,17 +1,17 @@
-import LottieWrapper from '../../components/Lottie'
-import Barchart from '../../ui/Barchart'
-import NavigateLink from '../../ui/NavigateLink'
-import StatiscticsCart from '../../ui/StatiscticsCart'
+import LottieWrapper from "../../components/Lottie";
+import Barchart from "../../ui/Barchart";
+import NavigateLink from "../../ui/NavigateLink";
+import StatiscticsCart from "../../ui/StatiscticsCart";
 
 const data = [
-  { x: 'کاربر 1', y: 4000 },
-  { x: 'کاربر 2', y: 3000 },
-  { x: 'کاربر 3', y: 2000 },
-  { x: 'کاربر 4', y: 2780 },
-  { x: 'کاربر 5', y: 1890 },
-  { x: 'کاربر 6', y: 2390 },
-  { x: 'کاربر 7', y: 3490 },
-]
+  { x: "کاربر 1", y: 4000 },
+  { x: "کاربر 2", y: 3000 },
+  { x: "کاربر 3", y: 2000 },
+  { x: "کاربر 4", y: 2780 },
+  { x: "کاربر 5", y: 1890 },
+  { x: "کاربر 6", y: 2390 },
+  { x: "کاربر 7", y: 3490 },
+];
 export default function AdminHome() {
   return (
     <div className="flex flex-col items-center gap-10 max-w-6xl mx-auto">
@@ -47,8 +47,39 @@ export default function AdminHome() {
           title="تعداد وویس های ضبط شده تا به حال"
           className="!bg-danger/20 col-span-12 sm:col-span-6 lg:col-span-3"
         />
+        <StatiscticsCart
+          statistics={15210}
+          title="تعداد وویس های ضبط شده تا به حال"
+          className="!bg-primary-300/20 col-span-12 sm:col-span-6 lg:col-span-3"
+        />
+        <StatiscticsCart
+          statistics={15210}
+          title="تعداد وویس های ضبط شده تا به حال"
+          className="!bg-secondary-300/20 col-span-12 sm:col-span-6 lg:col-span-3"
+        />
+        <StatiscticsCart
+          statistics={420}
+          title="تعداد وویس های ضبط شده تا به حال"
+          className="!bg-success/20 col-span-12 sm:col-span-6 lg:col-span-3"
+        />
+        <StatiscticsCart
+          statistics={246574}
+          title="تعداد وویس های ضبط شده تا به حال"
+          className="!bg-danger/20 col-span-12 sm:col-span-6 lg:col-span-3"
+        />
       </div>
-      <Barchart data={data} chartTitle="تعداد وویس هر کاربر" />
+      <div className="grid grid-cols-2  w-full gap-4">
+        <Barchart
+          data={data}
+          chartTitle="تعداد وویس هر کاربر"
+          className="lg:col-span-1"
+        />
+        <Barchart
+          data={data}
+          chartTitle="تعداد متن هر ادمین"
+          className="lg:col-span-1"
+        />
+      </div>
     </div>
-  )
+  );
 }

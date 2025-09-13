@@ -4,11 +4,12 @@ import { BarChart, Bar, XAxis, ResponsiveContainer, LabelList } from "recharts";
 interface BarchartPropsType {
   data: { x: string; y: number }[];
   chartTitle: string;
+  className?: string;
 }
 export default function Barchart(props: BarchartPropsType) {
-  const { data, chartTitle } = props;
+  const { data, chartTitle, className } = props;
   return (
-    <div className="w-full">
+    <div className={`w-full ${className}`}>
       <h2 className="text-xl font-bold text-center mb-2 text-secondary-700">
         {chartTitle}
       </h2>
