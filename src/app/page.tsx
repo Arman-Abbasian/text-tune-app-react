@@ -16,11 +16,11 @@ export default function Home() {
       if (!isAuthenticated) navigate('/auth/login')
       if (isAuthenticated && userRole === 'Admin') navigate('/admin')
       if (isAuthenticated && userRole === 'User') navigate('/user')
-    }, 3000)
+    }, 30000)
   }, [isAuthenticated])
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full">
+    <div className="flex flex-col items-center justify-center h-full w-full">
       <p className=" text-2xl font-bold mb-10">
         به نرم افزار اصلاح کلمات خوش آمدید
       </p>

@@ -2,16 +2,16 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 interface AuthState {
   isAuthenticated: boolean | null
-  userRole: string | null
+  userRole: 'User' | 'Admin' | null
   username: string
   token: string | null
 }
 
 const initialState: AuthState = {
-  isAuthenticated: true,
-  userRole: 'Admin',
-  username: 'ali',
-  token: 'nudddddll',
+  isAuthenticated: null,
+  userRole: null,
+  username: '',
+  token: null,
 }
 
 const authSlice = createSlice({
@@ -23,7 +23,7 @@ const authSlice = createSlice({
       action: PayloadAction<{
         token: string
         userName: string
-        role: string
+        role: 'Admin' | 'User'
       }>
     ) => {
       state.isAuthenticated = true
@@ -37,7 +37,7 @@ const authSlice = createSlice({
 
     logout: (state) => {
       state.isAuthenticated = false
-      state.userRole = ''
+      state.userRole = null
       state.username = ''
       state.token = null
 
@@ -48,12 +48,13 @@ const authSlice = createSlice({
 
     checkAuthFromStorage: (state) => {
       const token = localStorage.getItem('token')
-      const userRole = localStorage.getItem('userRole')
+      const userRole = localStorage.getItem('userRole') as 'User' | 'Admin'
+
       const username = localStorage.getItem('username')
 
       if (token && userRole) {
         state.token = token
-        state.userRole = userRole || ''
+        state.userRole = userRole || null
         state.username = username || ''
         state.isAuthenticated = true
       } else {

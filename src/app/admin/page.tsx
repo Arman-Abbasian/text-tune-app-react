@@ -30,7 +30,8 @@ export default function AdminHome() {
     )
   }
   return (
-    <div className="flex flex-col items-center gap-10 max-w-6xl mx-auto relative">
+    <div className="flex flex-col items-center gap-10 max-w-6xl mx-auto relative h-full">
+      {/* header */}
       <LogOut
         className="absolute left-0 text-danger"
         onClick={() => dispatch(logout())}
@@ -46,6 +47,8 @@ export default function AdminHome() {
 
         <NavigateLink name="افزودن متن" to="/admin/addText" />
       </div>
+
+      {/* cart section */}
       <div className="grid grid-cols-12 gap-8 w-full">
         <StatiscticsCart
           statistics={Number(
@@ -108,6 +111,7 @@ export default function AdminHome() {
           loading={GetAdminLandingPageStatisticsLoading}
         />
       </div>
+      {/* chart section */}
       <div className="grid grid-cols-2  w-full gap-4">
         <Barchart
           data={userSubmittedVoices() || []}
