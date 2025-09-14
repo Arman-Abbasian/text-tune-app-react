@@ -33,7 +33,7 @@ export default function AdminHome() {
     <div className="flex flex-col items-center gap-10 max-w-6xl mx-auto relative h-full">
       {/* header */}
       <LogOut
-        className="absolute left-0 text-secondary-500"
+        className="absolute left-0 text-secondary-500 cursor-pointer"
         onClick={() => dispatch(logout())}
       />
       <div className="flex items-center gpa-2">

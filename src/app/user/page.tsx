@@ -17,7 +17,7 @@ export default function User() {
       <div className="flex items-center justify-between gap-4">
         <Filters filters={filters} setFilters={setFilters} />
         <LogOut
-          className="text-secondary-500"
+          className="text-secondary-500 cursor-pointer"
           onClick={() => dispatch(logout())}
         />
       </div>
