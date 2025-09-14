@@ -16,7 +16,7 @@ export default function Home() {
       if (!isAuthenticated) navigate('/auth/login')
       if (isAuthenticated && userRole === 'Admin') navigate('/admin')
       if (isAuthenticated && userRole === 'User') navigate('/user')
-    }, 30000)
+    }, 3000)
   }, [isAuthenticated])
 
   return (

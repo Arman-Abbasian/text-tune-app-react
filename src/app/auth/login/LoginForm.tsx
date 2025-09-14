@@ -38,9 +38,11 @@ export default function LoginForm() {
             token: data?.token || '',
           })
         )
-        if (data?.roles.includes('Admin')) navigate('/admin')
-        else navigate('/user')
-      }
+
+        navigate('/')
+      },
+      () => {},
+      'ورود با موفقیت انجام شد'
     )
   }
 
