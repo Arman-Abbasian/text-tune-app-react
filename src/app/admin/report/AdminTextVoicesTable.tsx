@@ -169,7 +169,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
                     ) : element.isConfirmed === false ? (
                       <X className="text-danger" />
                     ) : (
-                      <HourglassIcon className="text-primary-500" />
+                      <HourglassIcon className="text-secondary-500" />
                     )}
                   </div>
                 </TableCell>
