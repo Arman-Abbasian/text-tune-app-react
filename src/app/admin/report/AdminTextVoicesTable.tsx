@@ -98,7 +98,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
   if (!item) {
     return (
       <div className="flex flex-col gap-8">
-        <p className="text-center text-primary-900 text-2xl font-semibold">
+        <p className="text-center text-secondary-500 text-2xl font-semibold">
           برای نمایش جزئیات هر متن لطفا روی متن مورد نظر کلیک کنید
         </p>
         <LottieWrapper src="/json/click.json" loop autoplay className="h-52" />
@@ -108,7 +108,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
   if (item.length === 0) {
     return (
       <div className="flex flex-col gap-8">
-        <p className="text-center text-primary-900 text-2xl font-semibold">
+        <p className="text-center text-secondary-500 text-xl font-semibold">
           هیچ ویسی برای این متن ثبت نشده است
         </p>
         <LottieWrapper src="/json/click.json" loop autoplay className="h-52" />
@@ -122,22 +122,22 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
         <Table className="rounded-lg overflow-hidden shadow-2xl drop-shadow-2xl">
           <TableHeader className="bg-primary-700">
             <TableRow>
-              <TableHead className="text-right text-primary-300">
+              <TableHead className="text-right text-primary-100">
                 نام کاربر
               </TableHead>
-              <TableHead className="text-center text-primary-300 w-32">
+              <TableHead className="text-center text-primary-100 w-32">
                 تاریخ ضبط
               </TableHead>
-              <TableHead className="text-center text-primary-300 w-64">
+              <TableHead className="text-center text-primary-100 w-64">
                 فایل صوتی
               </TableHead>
-              <TableHead className="text-center text-primary-300">
+              <TableHead className="text-center text-primary-100">
                 یادداشت
               </TableHead>
-              <TableHead className="text-center text-primary-300 w-20">
+              <TableHead className="text-center text-primary-100 w-20">
                 وضعیت
               </TableHead>
-              <TableHead className="text-left text-primary-300 w-32">
+              <TableHead className="text-left text-primary-100 w-32">
                 تغییر وضعیت
               </TableHead>
             </TableRow>

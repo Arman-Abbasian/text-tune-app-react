@@ -42,16 +42,16 @@ const UserVoiceTable = (props: UserVoiceTablePropsType) => {
       <Table className="rounded-lg overflow-hidden w-full">
         <TableHeader className="bg-primary-700">
           <TableRow>
-            <TableHead className="text-right text-primary-300 min-w-64 lg:w-auto">
+            <TableHead className="text-right text-primary-100 min-w-64 lg:w-auto">
               متن
             </TableHead>
-            <TableHead className="text-center text-primary-300 w-64">
+            <TableHead className="text-center text-primary-100 w-64">
               عناوین
             </TableHead>
-            <TableHead className="text-center text-primary-300 w-32">
+            <TableHead className="text-center text-primary-100 w-32">
               وضعیت
             </TableHead>
-            <TableHead className="text-left text-primary-300 w-20">
+            <TableHead className="text-left text-primary-100 w-20">
               خواندن
             </TableHead>
           </TableRow>
@@ -81,7 +81,7 @@ const UserVoiceTable = (props: UserVoiceTablePropsType) => {
                         false ? (
                         <X className="text-danger" />
                       ) : (
-                        <Hourglass className="text-primary-300" />
+                        <Hourglass className="text-secondary-500" />
                       )
                     ) : (
                       'بدون ویس'

@@ -1,26 +1,26 @@
-import { Eye, UserIcon } from "lucide-react";
-import { useState } from "react";
-import { useLoginMutation } from "../../../services/Authentication";
-import TextInputComp from "../../../components/TextInputComp";
-import ButtonComp from "../../../ui/ButtonComp";
-import { handleMutationApiCall } from "../../../utils/handleMutationApiCall";
-import { useDispatch } from "react-redux";
-import { login } from "../../../features/authSlice";
-import { useNavigate } from "react-router-dom";
-import type { LoginRes } from "../../../services/types/Authentication";
+import { Eye, UserIcon } from 'lucide-react'
+import { useState } from 'react'
+import { useLoginMutation } from '../../../services/Authentication'
+import TextInputComp from '../../../components/TextInputComp'
+import ButtonComp from '../../../ui/ButtonComp'
+import { handleMutationApiCall } from '../../../utils/handleMutationApiCall'
+import { useDispatch } from 'react-redux'
+import { login } from '../../../features/authSlice'
+import { useNavigate } from 'react-router-dom'
+import type { LoginRes } from '../../../services/types/Authentication'
 
 type LoginFormPropsType = {
-  username: string;
-  password: string;
-};
+  username: string
+  password: string
+}
 export default function LoginForm() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState<LoginFormPropsType>({
-    username: "",
-    password: "",
-  });
-  let navigate = useNavigate();
-  const [Login, { isLoading: LoginLoading }] = useLoginMutation();
+    username: '',
+    password: '',
+  })
+  let navigate = useNavigate()
+  const [Login, { isLoading: LoginLoading }] = useLoginMutation()
   const submitHandler = async () => {
     await handleMutationApiCall<LoginRes>(
       () =>
@@ -33,24 +33,24 @@ export default function LoginForm() {
       (data) => {
         dispatch(
           login({
-            userName: data?.userName || "",
-            role: data?.roles[0] || "",
-            token: data?.token || "",
+            userName: data?.userName || '',
+            role: data?.roles[0] || 'User',
+            token: data?.token || '',
           })
-        );
-        if (data?.roles.includes("Admin")) navigate("/admin");
-        else navigate("/user");
+        )
+        if (data?.roles.includes('Admin')) navigate('/admin')
+        else navigate('/user')
       }
-    );
-  };
+    )
+  }
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   return (
     <div className="flex flex-col justify-center items-center gap-8 w-full h-full">
-      <p className="text-center text-2xl font-bold text-secondary-700">ورود</p>
+      <p className="text-center text-2xl font-bold text-secondary-900">ورود</p>
       <div className="flex flex-col gap-6 w-full">
         <TextInputComp
           name="username"
@@ -58,7 +58,7 @@ export default function LoginForm() {
           value={formData.username}
           placeholder="نام کاربری"
           className="flex-1"
-          icon={<UserIcon className="icon-small text-primary-900" />}
+          icon={<UserIcon className="icon-small text-secondary-900" />}
         />
 
         <TextInputComp
@@ -68,7 +68,7 @@ export default function LoginForm() {
           placeholder="رمز عبور"
           className="flex-1"
           type="password"
-          icon={<Eye className="icon-small text-primary-900" />}
+          icon={<Eye className="icon-small text-secondary-900" />}
         />
         <ButtonComp
           text="ورود"
@@ -78,10 +78,10 @@ export default function LoginForm() {
           onsubmit={submitHandler}
           loading={LoginLoading}
           disabled={
-            formData.username === "" || formData.password === "" || LoginLoading
+            formData.username === '' || formData.password === '' || LoginLoading
           }
         />
       </div>
     </div>
-  );
+  )
 }

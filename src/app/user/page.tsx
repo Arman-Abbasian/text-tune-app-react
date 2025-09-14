@@ -16,7 +16,10 @@ export default function User() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-4">
         <Filters filters={filters} setFilters={setFilters} />
-        <LogOut className="text-danger" onClick={() => dispatch(logout())} />
+        <LogOut
+          className="text-secondary-500"
+          onClick={() => dispatch(logout())}
+        />
       </div>
       <UserVoiceTable filters={filters} />
     </div>

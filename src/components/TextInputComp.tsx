@@ -25,7 +25,7 @@ function TextInputComp(props: TextInputCompPropsType) {
         name={name}
         {...restProps}
       />
-      {icon && <span className="text-primary-700">{icon}</span>}
+      {icon && <span className="text-secondary-500">{icon}</span>}
     </div>
   )
 }

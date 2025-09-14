@@ -8,6 +8,8 @@ import { useAddOrUpdateTrainingTextVoicesMutation } from '../services/User'
 //components
 import ImageComp from '@/ui/ImageComp'
 import ButtonComp from '@/ui/ButtonComp'
+import { handleMutationApiCall } from '@/utils/handleMutationApiCall'
+import { useNavigate } from 'react-router-dom'
 
 type AudioPlayerPropsType = {
   audioUrl: string
@@ -19,6 +21,8 @@ type AudioPlayerPropsType = {
 
 export default function AudioPlayer(props: AudioPlayerPropsType) {
   const { audioUrl, id, blobFile, className, shouldSendVoice = false } = props
+
+  let navigate = useNavigate()
 
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -53,7 +57,7 @@ export default function AudioPlayer(props: AudioPlayerPropsType) {
     setIsPlaying(!isPlaying)
   }
 
-  const sendVoiceHandler = () => {
+  const sendVoiceHandler = async () => {
     if (!blobFile) {
       alert('هیچ صدایی ضبط نشده')
       return
@@ -65,7 +69,14 @@ export default function AudioPlayer(props: AudioPlayerPropsType) {
     formData.append('TrainingTextId', String(id))
     formData.append('InsertedUserDescription', '')
 
-    AddOrUpdateTrainingTextVoices(formData)
+    await handleMutationApiCall(
+      () => AddOrUpdateTrainingTextVoices(formData).unwrap(),
+      () => {
+        navigate('/user')
+      },
+      () => {},
+      'فرم با موفقیت ثبت شد'
+    )
   }
 
   return (
@@ -106,7 +117,7 @@ export default function AudioPlayer(props: AudioPlayerPropsType) {
           canClick
           loading={AddOrUpdateTrainingTextVoicesLoading}
           disabled={AddOrUpdateTrainingTextVoicesLoading}
-          className="bg-secondary-700 w-full"
+          className="bg-secondary-500 w-full"
           onsubmit={sendVoiceHandler}
         />
       )}

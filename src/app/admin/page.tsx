@@ -33,7 +33,7 @@ export default function AdminHome() {
     <div className="flex flex-col items-center gap-10 max-w-6xl mx-auto relative h-full">
       {/* header */}
       <LogOut
-        className="absolute left-0 text-danger"
+        className="absolute left-0 text-secondary-500"
         onClick={() => dispatch(logout())}
       />
       <div className="flex items-center gpa-2">
@@ -55,7 +55,7 @@ export default function AdminHome() {
             GetAdminLandingPageStatistics?.data?.confirmedVoicesCount
           )}
           title="تعداد وویس های تایید شده"
-          className="!bg-primary-300/20 col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
+          className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
           loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
@@ -63,13 +63,13 @@ export default function AdminHome() {
             GetAdminLandingPageStatistics?.data?.notConfirmedVoicesCount
           )}
           title="تعداد وویس های تایید نشده"
-          className="!bg-secondary-300/20 col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
+          className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
           loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
           statistics={Number(GetAdminLandingPageStatistics?.data?.textsCount)}
           title="تعداد کل متن ها"
-          className="!bg-success/20 col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
+          className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
           loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
@@ -77,7 +77,7 @@ export default function AdminHome() {
             GetAdminLandingPageStatistics?.data?.textsCountForCurrentUser
           )}
           title="تعداد متن های ثبت شما توسط شما "
-          className="!bg-danger/20 col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
+          className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
           loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
@@ -85,7 +85,7 @@ export default function AdminHome() {
             GetAdminLandingPageStatistics?.data?.textsWithNoVoiceCount
           )}
           title="تعداد متن های بدون ویس "
-          className="!bg-primary-300/20 col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
+          className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
           loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
@@ -93,7 +93,7 @@ export default function AdminHome() {
             GetAdminLandingPageStatistics?.data?.textsWithVoiceCount
           )}
           title="تعداد متن های دارای ویس "
-          className="!bg-secondary-300/20 col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
+          className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
           loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
@@ -101,13 +101,13 @@ export default function AdminHome() {
             GetAdminLandingPageStatistics?.data?.undeterminedVoicesCount
           )}
           title="تعداد وویس های در انتظار بررسی"
-          className="!bg-success/20 col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
+          className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
           loading={GetAdminLandingPageStatisticsLoading}
         />
         <StatiscticsCart
           statistics={Number(GetAdminLandingPageStatistics?.data?.voicesCount)}
           title="تعداد کل ویس ها "
-          className="!bg-danger/20 col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
+          className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
           loading={GetAdminLandingPageStatisticsLoading}
         />
       </div>

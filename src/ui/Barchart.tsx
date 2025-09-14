@@ -1,15 +1,15 @@
 //libraries
-import { BarChart, Bar, XAxis, ResponsiveContainer, LabelList } from "recharts";
-import BeatLoaderFetch from "./BeatLoaderFetch";
+import { BarChart, Bar, XAxis, ResponsiveContainer, LabelList } from 'recharts'
+import BeatLoaderFetch from './BeatLoaderFetch'
 
 interface BarchartPropsType {
-  data: { x: string; y: number }[];
-  chartTitle: string;
-  className?: string;
-  isLoading: boolean;
+  data: { x: string; y: number }[]
+  chartTitle: string
+  className?: string
+  isLoading: boolean
 }
 export default function Barchart(props: BarchartPropsType) {
-  const { data, chartTitle, className, isLoading } = props;
+  const { data, chartTitle, className, isLoading } = props
   return (
     <div className={`w-full ${className}`}>
       <h2 className="text-xl font-bold text-center mb-2 text-secondary-700">
@@ -18,7 +18,7 @@ export default function Barchart(props: BarchartPropsType) {
       <ResponsiveContainer
         width="100%"
         height={400}
-        className={"p-4 bg-primary-700/30 rounded-lg "}
+        className={'p-4 bg-primary-700/30 rounded-lg '}
       >
         {isLoading ? (
           <BeatLoaderFetch />
@@ -31,22 +31,22 @@ export default function Barchart(props: BarchartPropsType) {
           >
             <XAxis
               dataKey="x"
-              stroke="var(--secondary-900)"
+              stroke="var(--secondary-300)"
               axisLine={false}
               tickLine={false}
             />
             {/* <YAxis dataKey="y" stroke="var(--secondary-900)" /> */}
 
-            <Bar dataKey="y" fill="var(--primary-700)" barSize={30}>
+            <Bar dataKey="y" fill="var(--secondary-500)" barSize={30}>
               <LabelList
                 dataKey="y"
                 position="top"
-                fill="var(--secondary-900)"
+                fill="var(--secondary-300)"
               />
             </Bar>
           </BarChart>
         )}
       </ResponsiveContainer>
     </div>
-  );
+  )
 }

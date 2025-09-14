@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 import type {
   GetFilteredTrainingTexts,
   TrainingTextVoiceDto,
-} from "../../../services/types/Admin";
-import Filters from "./Filters";
-import TextsSection from "./TextsSection";
-import { useLazyGetFilteredTrainingTextsQuery } from "../../../services/Admin";
+} from '../../../services/types/Admin'
+import Filters from './Filters'
+import TextsSection from './TextsSection'
+import { useLazyGetFilteredTrainingTextsQuery } from '../../../services/Admin'
 
 const initialFilters: GetFilteredTrainingTexts = {
-  isConfirmedVoice: "null",
-  searchText: "",
+  isConfirmedVoice: 'null',
+  searchText: '',
   isActiveText: true,
   shouldFilteredVoiceDateTime: true,
   startDateTime: null,
   endDateTime: null,
-};
+}
 
 interface TextListPropsType {
-  onItemSelect: (id: TrainingTextVoiceDto[]) => void;
+  onItemSelect: (id: TrainingTextVoiceDto[]) => void
 }
 
 export function TextList(props: TextListPropsType) {
-  const { onItemSelect } = props;
+  const { onItemSelect } = props
 
   const [filters, setFilters] =
-    useState<GetFilteredTrainingTexts>(initialFilters);
+    useState<GetFilteredTrainingTexts>(initialFilters)
 
   const [
     LazyGetFilteredTrainingTexts,
@@ -32,26 +32,26 @@ export function TextList(props: TextListPropsType) {
       data: LazyGetFilteredTrainingTextsData,
       isFetching: LazyGetFilteredTrainingTextsLoading,
     },
-  ] = useLazyGetFilteredTrainingTextsQuery();
-  console.log(LazyGetFilteredTrainingTextsData);
+  ] = useLazyGetFilteredTrainingTextsQuery()
+  console.log(LazyGetFilteredTrainingTextsData)
   useEffect(() => {
-    LazyGetFilteredTrainingTexts(filters);
-  }, []);
+    LazyGetFilteredTrainingTexts(filters)
+  }, [])
 
   const filtersHandler = async () => {
-    const data = await LazyGetFilteredTrainingTexts(filters).unwrap();
-    console.log(data);
-  };
+    const data = await LazyGetFilteredTrainingTexts(filters).unwrap()
+    console.log(data)
+  }
   const resetHandler = async () => {
-    setFilters(initialFilters);
-    const data = await LazyGetFilteredTrainingTexts(initialFilters).unwrap();
-    console.log(data);
-  };
+    setFilters(initialFilters)
+    const data = await LazyGetFilteredTrainingTexts(initialFilters).unwrap()
+    console.log(data)
+  }
 
   return (
     <div className="flex flex-col h-full">
       <div className="mb-10">
-        <p className="text-primary-500 mb-2">فیلتر</p>
+        <p className="text-secondary-500 mb-2">فیلتر</p>
         <Filters
           onFilter={filtersHandler}
           onReset={resetHandler}
@@ -60,7 +60,7 @@ export function TextList(props: TextListPropsType) {
           setFilters={setFilters}
         />
       </div>
-      <p className="text-primary-500 mb-2">لیست</p>
+      <p className="text-secondary-500 mb-2">لیست</p>
       <TextsSection
         loading={LazyGetFilteredTrainingTextsLoading}
         data={LazyGetFilteredTrainingTextsData?.data}
@@ -68,5 +68,5 @@ export function TextList(props: TextListPropsType) {
       />
       <div className="flex flex-col flex-1 gap-4 overflow-y-auto"></div>
     </div>
-  );
+  )
 }

@@ -61,13 +61,13 @@ export default function Filters(props: FiltersPropsType) {
         />
       </div>
       <div className="flex !items-center gap-3">
-        <Label htmlFor="airplane-mode" className="text-primary-500">
+        <Label htmlFor="airplane-mode" className="text-secondary-500">
           تاریخ صوت
         </Label>
         <div dir="ltr">
           <Switch
             id="airplane-mode"
-            className="data-[state=checked]:bg-primary-500 data-[state=unchecked]:bg-primary-500 border-0"
+            className="data-[state=checked]:bg-secondary-500 data-[state=unchecked]:bg-secondary-500 border-0"
             name="shouldFilteredVoiceDateTime"
             checked={filters.shouldFilteredVoiceDateTime}
             onCheckedChange={(checked: any) =>
@@ -75,7 +75,7 @@ export default function Filters(props: FiltersPropsType) {
             }
           />
         </div>
-        <Label htmlFor="airplane-mode" className="text-primary-500">
+        <Label htmlFor="airplane-mode" className="text-secondary-500">
           تاریخ متن
         </Label>
       </div>
@@ -95,7 +95,7 @@ export default function Filters(props: FiltersPropsType) {
       </div>
       <div className="flex items-center gap-4">
         <ButtonComp
-          className={`w-20 hover:bg-primary-100 hover:text-primary-700 text-secondary-100 `}
+          className={`w-20 hover:bg-secondary-500  text-secondary-100 `}
           isFormButton={true}
           canClick={true}
           type="submit"
@@ -105,7 +105,7 @@ export default function Filters(props: FiltersPropsType) {
           text={<Funnel className="!text-2xl" />}
         />
         <ButtonComp
-          className={`w-20 hover:bg-primary-100 hover:text-primary-700 text-secondary-100 `}
+          className={`w-20 hover:bg-secondary-100 text-secondary-100 `}
           isFormButton={true}
           canClick={true}
           type="submit"
