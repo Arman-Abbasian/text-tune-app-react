@@ -42,16 +42,18 @@ const UserVoiceTable = (props: UserVoiceTablePropsType) => {
       <Table className="rounded-lg overflow-hidden w-full">
         <TableHeader className="bg-primary-700">
           <TableRow>
-            <TableHead className="text-right text-primary-300 max-w-64">
+            <TableHead className="text-right text-primary-300 min-w-64 lg:w-auto">
               متن
             </TableHead>
-            <TableHead className="text-center text-primary-300 max-w-64 md:max-w-max">
+            <TableHead className="text-center text-primary-300 w-64">
               عناوین
             </TableHead>
-            <TableHead className="text-center text-primary-300">
+            <TableHead className="text-center text-primary-300 w-32">
               وضعیت
             </TableHead>
-            <TableHead className="text-left text-primary-300">خواندن</TableHead>
+            <TableHead className="text-left text-primary-300 w-20">
+              خواندن
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className="bg-primary-100">
@@ -60,29 +62,33 @@ const UserVoiceTable = (props: UserVoiceTablePropsType) => {
           ) : (
             LazyGetFilteredTrainingVoicesData.data.map((item) => (
               <TableRow key={item.id} className="text-primary-700">
-                <TableCell className="text-right max-w-64 break-words whitespace-normal">
+                <TableCell className="text-right break-words whitespace-normal">
                   {item.text}
                 </TableCell>
-                <TableCell className="flex justify-center items-center flex-wrap max-w-64 md:max-w-full gap-3">
-                  {item.trainingTextKeywordDtoList.map((tag) => (
-                    <TagComp key={tag.id}>{tag.keyword}</TagComp>
-                  ))}
+                <TableCell>
+                  <div className="flex justify-center items-center gap-3">
+                    {item.trainingTextKeywordDtoList.map((tag) => (
+                      <TagComp key={tag.id}>{tag.keyword}</TagComp>
+                    ))}
+                  </div>
                 </TableCell>
                 <TableCell className="text-center">
-                  {item.trainingTextVoiceDtoList[0] ? (
-                    item.trainingTextVoiceDtoList[0].isConfirmed ? (
-                      <Check className="text-success" />
-                    ) : item.trainingTextVoiceDtoList[0].isConfirmed ===
-                      false ? (
-                      <X className="text-danger" />
+                  <div className="flex justify-center">
+                    {item.trainingTextVoiceDtoList[0] ? (
+                      item.trainingTextVoiceDtoList[0].isConfirmed ? (
+                        <Check className="text-success" />
+                      ) : item.trainingTextVoiceDtoList[0].isConfirmed ===
+                        false ? (
+                        <X className="text-danger" />
+                      ) : (
+                        <Hourglass className="text-primary-300" />
+                      )
                     ) : (
-                      <Hourglass className="text-primary-700" />
-                    )
-                  ) : (
-                    'بدون ویس'
-                  )}
+                      'بدون ویس'
+                    )}
+                  </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="text-center">
                   {(!item.trainingTextVoiceDtoList[0] ||
                     item.trainingTextVoiceDtoList[0].isConfirmed === false) && (
                     <Link

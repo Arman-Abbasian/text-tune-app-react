@@ -17,7 +17,7 @@ function App() {
   }, [])
 
   return (
-    <div className="!p-4 h-screen overflow-auto bg-[url('/images/background.jpg')]  text-secondary-900">
+    <div className="!p-4 h-screen overflow-auto bg-[radial-gradient(circle,_#ffec9f,_#fdd719)]  text-secondary-900">
       <Suspense
         fallback={
           <div className="h-screen flex justify-center items-center">

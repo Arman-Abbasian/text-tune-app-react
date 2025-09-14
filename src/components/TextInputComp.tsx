@@ -16,10 +16,10 @@ function TextInputComp(props: TextInputCompPropsType) {
 
   return (
     <div
-      className={`flex justify-between items-center gap-2 px-2 py-1 border rounded-lg bg-primary-100 border-secondary-300 w-full ${className}`}
+      className={`flex justify-between items-center gap-2 px-2 py-1 border rounded-lg bg-primary-100 border-secondary-300 w-full  ${className}`}
     >
       <input
-        className="p-2 focus:outline-none hove:outline-none text-primary-700"
+        className="flex-1 min-w-0 p-2 focus:outline-none hover:outline-none text-primary-700"
         value={value}
         onChange={onChange}
         name={name}

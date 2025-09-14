@@ -33,7 +33,7 @@ export default function AudioRecorder(props: AudioRecorderPropsType) {
             audioUrl={audioUrl}
             id={id}
             blobFile={blobRef.current}
-            className="shadow-2xl drop-shadow-2xl"
+            className="shadow-2xl drop-shadow-2xl !w-52"
           />
         </div>
       )}
