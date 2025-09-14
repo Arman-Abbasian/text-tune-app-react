@@ -75,7 +75,7 @@ export default function AudioPlayer(props: AudioPlayerPropsType) {
         navigate('/user')
       },
       () => {},
-      'فرم با موفقیت ثبت شد'
+      'ویس با موفقیت ارسال شد'
     )
   }
 
