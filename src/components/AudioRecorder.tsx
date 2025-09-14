@@ -29,7 +29,12 @@ export default function AudioRecorder(props: AudioRecorderPropsType) {
       )}
       {audioUrl && (
         <div className="flex flex-col gap-2">
-          <AudioPlayer audioUrl={audioUrl} id={id} blobFile={blobRef.current} />
+          <AudioPlayer
+            audioUrl={audioUrl}
+            id={id}
+            blobFile={blobRef.current}
+            className="shadow-2xl drop-shadow-2xl"
+          />
         </div>
       )}
     </div>

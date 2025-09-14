@@ -5,44 +5,46 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../components/ui/table";
-import { Link } from "react-router-dom";
-import TagComp from "../../ui/TagComp";
-import ImageComp from "../../ui/ImageComp";
-import { useLazyGetFilteredTrainingVoicesQuery } from "../../services/User";
-import { useEffect } from "react";
-import type { FiltersType } from "./Filters";
-import BeatLoaderFetch from "@/ui/BeatLoaderFetch";
+} from '../../components/ui/table'
+import { Link } from 'react-router-dom'
+import TagComp from '../../ui/TagComp'
+import ImageComp from '../../ui/ImageComp'
+import { useLazyGetFilteredTrainingVoicesQuery } from '../../services/User'
+import { useEffect } from 'react'
+import type { FiltersType } from './Filters'
+import BeatLoaderFetch from '@/ui/BeatLoaderFetch'
+import { Hourglass, X, Check } from 'lucide-react'
 
 interface UserVoiceTablePropsType {
-  filters: FiltersType;
+  filters: FiltersType
 }
 
 const UserVoiceTable = (props: UserVoiceTablePropsType) => {
-  const { filters } = props;
+  const { filters } = props
   const [
     LazyGetFilteredTrainingVoices,
     {
       data: LazyGetFilteredTrainingVoicesData,
       isFetching: LazyGetFilteredTrainingVoicesLoading,
     },
-  ] = useLazyGetFilteredTrainingVoicesQuery();
+  ] = useLazyGetFilteredTrainingVoicesQuery()
 
   useEffect(() => {
     LazyGetFilteredTrainingVoices({
       isActiveText: true,
       isConfirmedVoice: filters.isConfirmedVoice,
-    }).unwrap();
-  }, []);
+    }).unwrap()
+  }, [filters])
 
-  console.log(LazyGetFilteredTrainingVoicesData);
-  if (LazyGetFilteredTrainingVoicesLoading) return <BeatLoaderFetch />;
-  if (LazyGetFilteredTrainingVoicesData)
+  if (LazyGetFilteredTrainingVoicesLoading) return <BeatLoaderFetch />
+  if (LazyGetFilteredTrainingVoicesData?.data)
     return (
       <Table className="rounded-lg overflow-hidden w-full">
         <TableHeader className="bg-primary-700">
           <TableRow>
-            <TableHead className="text-right text-primary-300">متن</TableHead>
+            <TableHead className="text-right text-primary-300 max-w-64">
+              متن
+            </TableHead>
             <TableHead className="text-center text-primary-300 max-w-64 md:max-w-max">
               عناوین
             </TableHead>
@@ -53,77 +55,57 @@ const UserVoiceTable = (props: UserVoiceTablePropsType) => {
           </TableRow>
         </TableHeader>
         <TableBody className="bg-primary-100">
-          {LazyGetFilteredTrainingVoicesData.length === 0 ? (
+          {LazyGetFilteredTrainingVoicesData.data.length === 0 ? (
             <p>متنی جهت خواندن موجود نیست</p>
           ) : (
-            LazyGetFilteredTrainingVoicesData.map((item) => (
+            LazyGetFilteredTrainingVoicesData.data.map((item) => (
               <TableRow key={item.id} className="text-primary-700">
-                <TableCell className="text-right">{item.text}</TableCell>
+                <TableCell className="text-right max-w-64 break-words whitespace-normal">
+                  {item.text}
+                </TableCell>
                 <TableCell className="flex justify-center items-center flex-wrap max-w-64 md:max-w-full gap-3">
                   {item.trainingTextKeywordDtoList.map((tag) => (
                     <TagComp key={tag.id}>{tag.keyword}</TagComp>
                   ))}
                 </TableCell>
-                <TableCell className="text-center">{item.isActive}</TableCell>
+                <TableCell className="text-center">
+                  {item.trainingTextVoiceDtoList[0] ? (
+                    item.trainingTextVoiceDtoList[0].isConfirmed ? (
+                      <Check className="text-success" />
+                    ) : item.trainingTextVoiceDtoList[0].isConfirmed ===
+                      false ? (
+                      <X className="text-danger" />
+                    ) : (
+                      <Hourglass className="text-primary-700" />
+                    )
+                  ) : (
+                    'بدون ویس'
+                  )}
+                </TableCell>
                 <TableCell>
-                  <Link
-                    to={{
-                      pathname: "/user/voice",
-                      search: `?id=${item.id}&text=${item.text}`,
-                    }}
-                    className="flex justify-end"
-                  >
-                    <ImageComp
-                      src={"/images/microphone.png"}
-                      alt="mic"
-                      className="w-10"
-                    />
-                  </Link>
+                  {(!item.trainingTextVoiceDtoList[0] ||
+                    item.trainingTextVoiceDtoList[0].isConfirmed === false) && (
+                    <Link
+                      to={{
+                        pathname: '/user/voice',
+                        search: `?id=${item.id}&text=${item.text}`,
+                      }}
+                      className="flex justify-end"
+                    >
+                      <ImageComp
+                        src={'/images/microphone.png'}
+                        alt="mic"
+                        className="w-10"
+                      />
+                    </Link>
+                  )}
                 </TableCell>
               </TableRow>
             ))
           )}
         </TableBody>
       </Table>
-    );
-};
+    )
+}
 
-export default UserVoiceTable;
-
-const items = [
-  {
-    id: 1,
-    text: "این متن تستی است و جهت خواندن از آن استفاده می شود",
-    tags: ["a", "b"],
-    date: "1404/10/10",
-    condition: "false",
-  },
-  {
-    id: 2,
-    text: "این متن تستی است و جهت خواندن از آن استفاده می شود",
-    tags: ["a", "b"],
-    date: "1404/10/10",
-    condition: "false",
-  },
-  {
-    id: 3,
-    text: "این متن تستی است و جهت خواندن از آن استفاده می شود",
-    tags: ["adrrrred", "دیزیشتیرین خون", "adrrrdred", "دیزیشیتیرین خون"],
-    date: "1404/10/10",
-    condition: "pending",
-  },
-  {
-    id: 4,
-    text: "این متن تستی است و جهت خواندن از آن استفاده می شود",
-    tags: ["a", "b"],
-    date: "1404/10/10",
-    condition: "false",
-  },
-  {
-    id: 5,
-    text: "این متن تستی است و جهت خواندن از آن استفاده می شود",
-    tags: ["adrrrred", "دیزیشتیرین خون"],
-    date: "1404/10/10",
-    condition: "pending",
-  },
-];
+export default UserVoiceTable
