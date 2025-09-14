@@ -125,19 +125,19 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
               <TableHead className="text-right text-primary-300">
                 نام کاربر
               </TableHead>
-              <TableHead className="text-center text-primary-300">
+              <TableHead className="text-center text-primary-300 w-32">
                 تاریخ ضبط
               </TableHead>
-              <TableHead className="text-center text-primary-300">
+              <TableHead className="text-center text-primary-300 w-64">
                 فایل صوتی
               </TableHead>
               <TableHead className="text-center text-primary-300">
                 یادداشت
               </TableHead>
-              <TableHead className="text-center text-primary-300">
+              <TableHead className="text-center text-primary-300 w-20">
                 وضعیت
               </TableHead>
-              <TableHead className="text-left text-primary-300">
+              <TableHead className="text-left text-primary-300 w-32">
                 تغییر وضعیت
               </TableHead>
             </TableRow>
@@ -154,47 +154,60 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
                 <TableCell className="text-center">
                   <AudioPlayer audioUrl={element.voicePath} />
                 </TableCell>
-                <TableCell className="flex justify-center text-center">
-                  <Eye onClick={() => voiceCommentHandler(element)} />
-                </TableCell>
-                <TableCell className="text-center">
-                  {element.isConfirmed === true ? (
-                    <Check className="text-success" />
-                  ) : element.isConfirmed === false ? (
-                    <X className="text-red" />
-                  ) : (
-                    <HourglassIcon className="text-primary-500" />
-                  )}
-                </TableCell>
-                <TableCell className="flex justify-end gap-6">
-                  {ConfirmOrUnconfirmedTrainingVoiceLoading ? (
-                    <BeatLoaderButton color="yellow" />
-                  ) : element.isConfirmed === true ? (
-                    <CircleX
-                      className="text-danger cursor-pointer"
-                      onClick={() => voiceConfirmationHandler(element, 'false')}
+                <TableCell>
+                  <div className="flex justify-center text-center">
+                    <Eye
+                      onClick={() => voiceCommentHandler(element)}
+                      className="cursor-pointer"
                     />
-                  ) : element.isConfirmed === false ? (
-                    <CircleCheckBig
-                      className="text-success cursor-pointer"
-                      onClick={() => voiceConfirmationHandler(element, 'true')}
-                    />
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <CircleCheckBig
-                        className="text-success cursor-pointer"
-                        onClick={() =>
-                          voiceConfirmationHandler(element, 'true')
-                        }
-                      />
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center justify-center">
+                    {element.isConfirmed === true ? (
+                      <Check className="text-success" />
+                    ) : element.isConfirmed === false ? (
+                      <X className="text-red" />
+                    ) : (
+                      <HourglassIcon className="text-primary-500" />
+                    )}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center justify-end gap-6">
+                    {ConfirmOrUnconfirmedTrainingVoiceLoading ? (
+                      <BeatLoaderButton color="yellow" />
+                    ) : element.isConfirmed === true ? (
                       <CircleX
                         className="text-danger cursor-pointer"
                         onClick={() =>
                           voiceConfirmationHandler(element, 'false')
                         }
                       />
-                    </div>
-                  )}
+                    ) : element.isConfirmed === false ? (
+                      <CircleCheckBig
+                        className="text-success cursor-pointer"
+                        onClick={() =>
+                          voiceConfirmationHandler(element, 'true')
+                        }
+                      />
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <CircleCheckBig
+                          className="text-success cursor-pointer"
+                          onClick={() =>
+                            voiceConfirmationHandler(element, 'true')
+                          }
+                        />
+                        <CircleX
+                          className="text-danger cursor-pointer"
+                          onClick={() =>
+                            voiceConfirmationHandler(element, 'false')
+                          }
+                        />
+                      </div>
+                    )}
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
