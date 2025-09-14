@@ -33,7 +33,7 @@ const ButtonComp = (props: ButtonProps) => {
       } ${className}`}
       {...restProps}
     >
-      {loading ? <BeatLoaderButton /> : text}
+      {loading ? <BeatLoaderButton color="#000814" /> : text}
     </button>
   )
 }
