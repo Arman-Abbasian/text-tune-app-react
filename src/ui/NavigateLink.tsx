@@ -6,17 +6,22 @@ import { Link } from "react-router-dom";
 interface NavigateLinkPropsType {
   to: string;
   name: string;
+  description: string;
+  className?: string;
 }
 export default function NavigateLink(props: NavigateLinkPropsType) {
-  const { name, to } = props;
+  const { name, description, to, className } = props;
   return (
-    <div>
+    <div className={`w-full  ${className}`}>
       <Link
         to={to}
-        className="flex p-2 bg-blue-500/30 hover:bg-blue-500/60 rounded-lg justify-between gap-2 items-center hover:scale-105 w-36"
+        className="flex p-8 bg-blue-500/30 hover:bg-blue-500/60 rounded-lg justify-between gap-2 items-center hover:scale-105 w-full text-primary-100"
       >
         <ArrowRight />
-        <p>{name}</p>
+        <div className="flex flex-col gap-2">
+          <p className="text-lg font-bold">{name}</p>
+          <p className="text-sm">{description}</p>
+        </div>
       </Link>
     </div>
   );
