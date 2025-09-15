@@ -1,4 +1,4 @@
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import {
   Check,
   CircleCheckBig,
@@ -6,9 +6,9 @@ import {
   Eye,
   HourglassIcon,
   X,
-} from 'lucide-react'
-import { useState } from 'react'
-import { useConfirmOrUnconfirmedTrainingVoiceMutation } from '../../../services/Admin'
+} from "lucide-react";
+import { useState } from "react";
+import { useConfirmOrUnconfirmedTrainingVoiceMutation } from "../../../services/Admin";
 import {
   Table,
   TableBody,
@@ -16,84 +16,84 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../components/ui/table'
-import TextAreaComp from '../../../components/TextAreaComp'
-import ButtonComp from '../../../ui/ButtonComp'
-import ModalComp from '../../../ui/ModalComp'
-import LottieWrapper from '../../../components/Lottie'
-import type { TrainingTextVoiceDto } from '@/services/types/Admin'
-import moment from 'moment-jalaali'
-import BeatLoaderButton from '@/ui/BeatLoaderButton'
-import { RejectToast, SuccessToast } from '@/ui/Toasts'
-import AudioPlayer from '@/components/AudioPlayer'
+} from "../../../components/ui/table";
+import TextAreaComp from "../../../components/TextAreaComp";
+import ButtonComp from "../../../ui/ButtonComp";
+import ModalComp from "../../../ui/ModalComp";
+import LottieWrapper from "../../../components/Lottie";
+import type { TrainingTextVoiceDto } from "@/services/types/Admin";
+import moment from "moment-jalaali";
+import BeatLoaderButton from "@/ui/BeatLoaderButton";
+import { RejectToast, SuccessToast } from "@/ui/Toasts";
+import AudioPlayer from "@/components/AudioPlayer";
 
 interface AdminTextVoicesTablePropsType {
-  item: TrainingTextVoiceDto[] | null
-  setItem: React.Dispatch<React.SetStateAction<TrainingTextVoiceDto[] | null>>
+  item: TrainingTextVoiceDto[] | null;
+  setItem: React.Dispatch<React.SetStateAction<TrainingTextVoiceDto[] | null>>;
 }
 
 const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
-  const { item, setItem } = props
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { item, setItem } = props;
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [voiceElement, setVoiceElement] = useState<TrainingTextVoiceDto | null>(
     null
-  )
-  const [voiceComment, setVoiceComment] = useState('')
+  );
+  const [voiceComment, setVoiceComment] = useState("");
 
   const [
     ConfirmOrUnconfirmedTrainingVoice,
     { isLoading: ConfirmOrUnconfirmedTrainingVoiceLoading },
-  ] = useConfirmOrUnconfirmedTrainingVoiceMutation()
+  ] = useConfirmOrUnconfirmedTrainingVoiceMutation();
 
   const addCommentHandler = async () => {
     try {
       const response = await ConfirmOrUnconfirmedTrainingVoice({
         id: String(voiceElement?.id),
         confirmationDescription: voiceComment,
-      }).unwrap()
+      }).unwrap();
 
       if (response.isSuccess) {
-        SuccessToast('عملیات با موفقیت انجام شد')
-        setItem(null)
-        setVoiceComment('')
-        setVoiceElement(null)
-        setIsModalOpen(false)
+        SuccessToast("عملیات با موفقیت انجام شد");
+        setItem(null);
+        setVoiceComment("");
+        setVoiceElement(null);
+        setIsModalOpen(false);
       } else {
-        RejectToast(response.message || 'مشکلی رخ داده است')
+        RejectToast(response.message || "مشکلی رخ داده است");
       }
     } catch (error) {
-      RejectToast('مشکلی رخ داده است')
+      RejectToast("مشکلی رخ داده است");
     }
-  }
+  };
   const voiceConfirmationHandler = async (
     element: TrainingTextVoiceDto,
-    confirmation: 'true' | 'false'
+    confirmation: "true" | "false"
   ) => {
     try {
       const response = await ConfirmOrUnconfirmedTrainingVoice({
         id: String(element.id),
         isConfirmed: confirmation,
-      }).unwrap()
+      }).unwrap();
       if (response.isSuccess) {
-        SuccessToast('عملیات با موفقیت انجام شد')
-        setItem(null)
+        SuccessToast("عملیات با موفقیت انجام شد");
+        setItem(null);
       } else {
-        RejectToast(response.message || 'مشکلی رخ داده است')
+        RejectToast(response.message || "مشکلی رخ داده است");
       }
     } catch (error) {
-      RejectToast('مشکلی رخ داده است')
+      RejectToast("مشکلی رخ داده است");
     }
-  }
+  };
 
   const voiceCommentHandler = (element: TrainingTextVoiceDto) => {
-    setIsModalOpen(true)
-    setVoiceElement(element)
-    setVoiceComment(element.confirmationDescription)
-  }
+    setIsModalOpen(true);
+    setVoiceElement(element);
+    setVoiceComment(element.confirmationDescription);
+  };
 
   const changeCommentHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setVoiceComment(e.target.value)
-  }
+    setVoiceComment(e.target.value);
+  };
 
   if (!item) {
     return (
@@ -103,7 +103,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
         </p>
         <LottieWrapper src="/json/click.json" loop autoplay className="h-52" />
       </div>
-    )
+    );
   }
   if (item.length === 0) {
     return (
@@ -113,7 +113,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
         </p>
         <LottieWrapper src="/json/click.json" loop autoplay className="h-52" />
       </div>
-    )
+    );
   }
 
   if (item.length > 0)
@@ -149,7 +149,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
                   {element.insertedUserName}
                 </TableCell>
                 <TableCell className="text-center">
-                  {moment(element.insertedDateTime).format('jYYYY/jMM/jDD')}
+                  {moment(element.insertedDateTime).format("jYYYY/jMM/jDD")}
                 </TableCell>
                 <TableCell className="text-center">
                   <AudioPlayer audioUrl={element.voicePath} />
@@ -181,14 +181,14 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
                       <CircleX
                         className="text-danger cursor-pointer"
                         onClick={() =>
-                          voiceConfirmationHandler(element, 'false')
+                          voiceConfirmationHandler(element, "false")
                         }
                       />
                     ) : element.isConfirmed === false ? (
                       <CircleCheckBig
                         className="text-success cursor-pointer"
                         onClick={() =>
-                          voiceConfirmationHandler(element, 'true')
+                          voiceConfirmationHandler(element, "true")
                         }
                       />
                     ) : (
@@ -196,13 +196,13 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
                         <CircleCheckBig
                           className="text-success cursor-pointer"
                           onClick={() =>
-                            voiceConfirmationHandler(element, 'true')
+                            voiceConfirmationHandler(element, "true")
                           }
                         />
                         <CircleX
                           className="text-danger cursor-pointer"
                           onClick={() =>
-                            voiceConfirmationHandler(element, 'false')
+                            voiceConfirmationHandler(element, "false")
                           }
                         />
                       </div>
@@ -246,7 +246,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
           </div>
         </ModalComp>
       </>
-    )
-}
+    );
+};
 
-export default AdminTextVoicesTable
+export default AdminTextVoicesTable;
