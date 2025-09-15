@@ -1,10 +1,10 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 /*thin */
 @font-face {
-  font-family: 'Yekan Bakh';
-  src: url('./assets/fonts/YekanBakh-Thin.woff2') format('woff2');
+  font-family: "Yekan Bakh";
+  src: url("./assets/fonts/YekanBakh-Thin.woff2") format("woff2");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -12,8 +12,8 @@
 
 /*light */
 @font-face {
-  font-family: 'Yekan Bakh';
-  src: url('./assets/fonts/YekanBakh-Light.woff2') format('woff2');
+  font-family: "Yekan Bakh";
+  src: url("./assets/fonts/YekanBakh-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -21,8 +21,8 @@
 
 /*regular */
 @font-face {
-  font-family: 'Yekan Bakh';
-  src: url('./assets/fonts/YekanBakh-Regular.woff2') format('woff2');
+  font-family: "Yekan Bakh";
+  src: url("./assets/fonts/YekanBakh-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -30,8 +30,8 @@
 
 /*semiBold */
 @font-face {
-  font-family: 'Yekan Bakh';
-  src: url('./assets/fonts/YekanBakh-SemiBold.woff2') format('woff2');
+  font-family: "Yekan Bakh";
+  src: url("./assets/fonts/YekanBakh-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -39,8 +39,8 @@
 
 /*bold */
 @font-face {
-  font-family: 'Yekan Bakh';
-  src: url('./assets/fonts/YekanBakh-Bold.woff2') format('woff2');
+  font-family: "Yekan Bakh";
+  src: url("./assets/fonts/YekanBakh-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -48,8 +48,8 @@
 
 /*extraBold */
 @font-face {
-  font-family: 'Yekan Bakh';
-  src: url('./assets/fonts/YekanBakh-ExtraBold.woff2') format('woff2');
+  font-family: "Yekan Bakh";
+  src: url("./assets/fonts/YekanBakh-ExtraBold.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -57,8 +57,8 @@
 
 /*black */
 @font-face {
-  font-family: 'Yekan Bakh';
-  src: url('./assets/fonts/YekanBakh-Black.woff2') format('woff2');
+  font-family: "Yekan Bakh";
+  src: url("./assets/fonts/YekanBakh-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -66,8 +66,8 @@
 
 /*extrablack */
 @font-face {
-  font-family: 'Yekan Bakh';
-  src: url('./assets/fonts/YekanBakh-ExtraBlack.woff2') format('woff2');
+  font-family: "Yekan Bakh";
+  src: url("./assets/fonts/YekanBakh-ExtraBlack.woff2") format("woff2");
   font-weight: 950;
   font-style: normal;
   font-display: swap;
@@ -138,7 +138,7 @@
   --color-danger: var(--danger);
   --color-success: var(--success);
 
-  --font-family-iran: 'Yekan Bakh', system-ui, -apple-system, sans-serif;
+  --font-family-iran: "Yekan Bakh", system-ui, -apple-system, sans-serif;
   --font-family-system: system-ui, -apple-system, sans-serif;
 
   --animate-floatYMinus: floatYMinus 80s ease-in-out infinite;
@@ -175,7 +175,7 @@
   color-scheme: light dark;
   color: var(--primary-900);
   background-color: var(--primary-900);
-  font-family: 'Yekan Bakh', system-ui, -apple-system, sans-serif;
+  font-family: "Yekan Bakh", system-ui, -apple-system, sans-serif;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

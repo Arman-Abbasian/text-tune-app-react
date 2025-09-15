@@ -1,27 +1,36 @@
 //libraries
-import { BarChart, Bar, XAxis, ResponsiveContainer, LabelList } from 'recharts'
-import BeatLoaderFetch from './BeatLoaderFetch'
+import { BarChart, Bar, XAxis, ResponsiveContainer, LabelList } from "recharts";
+import BeatLoaderFetch from "./BeatLoaderFetch";
+import ErrorText from "./ErrorText";
 
 interface BarchartPropsType {
-  data: { x: string; y: number }[]
-  chartTitle: string
-  className?: string
-  isLoading: boolean
+  data: { x: string; y: number }[];
+  chartTitle: string;
+  className?: string;
+  isLoading: boolean;
+  isError: boolean;
+  refetch: () => void;
 }
 export default function Barchart(props: BarchartPropsType) {
-  const { data, chartTitle, className, isLoading } = props
+  const { data, chartTitle, className, isLoading, isError, refetch } = props;
   return (
     <div className={`w-full ${className}`}>
-      <h2 className="text-xl font-bold text-center mb-2 text-secondary-700">
+      <h2 className="text-xl font-bold text-center mb-2 text-secondary-500">
         {chartTitle}
       </h2>
       <ResponsiveContainer
         width="100%"
         height={400}
-        className={'p-4 bg-primary-700/30 rounded-lg '}
+        className={"p-4 bg-primary-700/30 rounded-lg "}
       >
         {isLoading ? (
-          <BeatLoaderFetch />
+          <div className="w-full">
+            <BeatLoaderFetch />
+          </div>
+        ) : isError ? (
+          <div>
+            <ErrorText refetch={refetch} />
+          </div>
         ) : (
           <BarChart
             data={data}
@@ -48,5 +57,5 @@ export default function Barchart(props: BarchartPropsType) {
         )}
       </ResponsiveContainer>
     </div>
-  )
+  );
 }

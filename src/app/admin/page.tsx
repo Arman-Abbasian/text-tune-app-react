@@ -12,7 +12,9 @@ export default function AdminHome() {
 
   const {
     data: GetAdminLandingPageStatistics,
-    isLoading: GetAdminLandingPageStatisticsLoading,
+    isFetching: GetAdminLandingPageStatisticsLoading,
+    isError: GetAdminLandingPageStatisticsError,
+    refetch: GetAdminLandingPageStatisticsRefetch,
   } = useGetAdminLandingPageStatisticsQuery();
 
   const adminTexts = () => {
@@ -22,7 +24,7 @@ export default function AdminHome() {
       }
     );
   };
-  const userSubmittedVoices = () => {
+  const userRecordedVoices = () => {
     return GetAdminLandingPageStatistics?.data?.adminLandingPageUserStatisticsDtoList.map(
       (item) => {
         return { x: item.userName, y: item.submitedVoiceCount };
@@ -56,7 +58,9 @@ export default function AdminHome() {
           )}
           title="تعداد وویس های تایید شده"
           className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
-          loading={GetAdminLandingPageStatisticsLoading}
+          isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
         <StatiscticsCart
           statistics={Number(
@@ -64,13 +68,17 @@ export default function AdminHome() {
           )}
           title="تعداد وویس های تایید نشده"
           className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
-          loading={GetAdminLandingPageStatisticsLoading}
+          isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
         <StatiscticsCart
           statistics={Number(GetAdminLandingPageStatistics?.data?.textsCount)}
           title="تعداد کل متن ها"
           className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
-          loading={GetAdminLandingPageStatisticsLoading}
+          isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
         <StatiscticsCart
           statistics={Number(
@@ -78,7 +86,9 @@ export default function AdminHome() {
           )}
           title="تعداد متن های ثبت شما توسط شما "
           className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
-          loading={GetAdminLandingPageStatisticsLoading}
+          isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
         <StatiscticsCart
           statistics={Number(
@@ -86,7 +96,9 @@ export default function AdminHome() {
           )}
           title="تعداد متن های بدون ویس "
           className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
-          loading={GetAdminLandingPageStatisticsLoading}
+          isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
         <StatiscticsCart
           statistics={Number(
@@ -94,7 +106,9 @@ export default function AdminHome() {
           )}
           title="تعداد متن های دارای ویس "
           className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
-          loading={GetAdminLandingPageStatisticsLoading}
+          isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
         <StatiscticsCart
           statistics={Number(
@@ -102,28 +116,36 @@ export default function AdminHome() {
           )}
           title="تعداد وویس های در انتظار بررسی"
           className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
-          loading={GetAdminLandingPageStatisticsLoading}
+          isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
         <StatiscticsCart
           statistics={Number(GetAdminLandingPageStatistics?.data?.voicesCount)}
           title="تعداد کل ویس ها "
           className="col-span-12 sm:col-span-6 lg:col-span-3 justify-self-center"
-          loading={GetAdminLandingPageStatisticsLoading}
+          isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
       </div>
       {/* chart section */}
       <div className="grid grid-cols-2  w-full gap-4">
         <Barchart
-          data={userSubmittedVoices() || []}
+          data={userRecordedVoices() || []}
           chartTitle="تعداد ویس ضبط شده توسط هر کاربر"
           className="col-span-2 lg:col-span-1"
           isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
         <Barchart
           data={adminTexts() || []}
           chartTitle="تعداد متن ایجاد شده توسط هر ادمین"
           className="col-span-2 lg:col-span-1"
           isLoading={GetAdminLandingPageStatisticsLoading}
+          isError={GetAdminLandingPageStatisticsError}
+          refetch={GetAdminLandingPageStatisticsRefetch}
         />
       </div>
     </div>
