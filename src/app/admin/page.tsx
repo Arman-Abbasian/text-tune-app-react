@@ -1,5 +1,4 @@
 import { useGetAdminLandingPageStatisticsQuery } from "@/services/Admin";
-import LottieWrapper from "../../components/Lottie";
 import Barchart from "../../ui/Barchart";
 import NavigateLink from "../../ui/NavigateLink";
 import StatiscticsCart from "../../ui/StatiscticsCart";
