@@ -1,4 +1,4 @@
 export interface GetFilteredTrainingTextsWithCurrentUserVoice {
-  isConfirmedVoice: 'null' | 'true' | 'false'
-  isActiveText: true
+  voiceType: "1" | "2" | "3" | "4";
+  isActiveText: true;
 }

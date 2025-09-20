@@ -122,7 +122,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
         <Table className="rounded-lg overflow-hidden shadow-2xl drop-shadow-2xl">
           <TableHeader className="bg-primary-700">
             <TableRow>
-              <TableHead className="text-right text-primary-100">
+              <TableHead className="text-right text-primary-100 pr-4 py-4">
                 نام کاربر
               </TableHead>
               <TableHead className="text-center text-primary-100 w-32">
@@ -137,7 +137,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
               <TableHead className="text-center text-primary-100 w-20">
                 وضعیت
               </TableHead>
-              <TableHead className="text-left text-primary-100 w-32">
+              <TableHead className="text-left text-primary-100 w-32 pl-4">
                 تغییر وضعیت
               </TableHead>
             </TableRow>
@@ -145,7 +145,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
           <TableBody className="text-primary-900 bg-primary-100">
             {item.map((element) => (
               <TableRow key={element.id} className="text-primary-700">
-                <TableCell className="text-right">
+                <TableCell className="text-right pr-4">
                   {element.insertedUserName}
                 </TableCell>
                 <TableCell className="text-center">
@@ -173,7 +173,7 @@ const AdminTextVoicesTable = (props: AdminTextVoicesTablePropsType) => {
                     )}
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="pl-4">
                   <div className="flex items-center justify-end gap-6">
                     {ConfirmOrUnconfirmedTrainingVoiceLoading ? (
                       <BeatLoaderButton color="yellow" />

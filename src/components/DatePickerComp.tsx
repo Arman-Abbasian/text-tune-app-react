@@ -17,7 +17,8 @@ export default function DatePickerComp(props: DatePickerCompPropsType) {
       calendar={persian}
       locale={persian_fa}
       placeholder={placeholder}
-      inputClass="!flex-1 w-full border border-primary-900 rounded-lg p-2 text-primary-700 bg-primary-100 placeholder:text-primary-500/70 placeholder:text-sm"
+      inputClass="w-full border border-primary-900 rounded-lg p-4 text-primary-700 bg-primary-100 placeholder:text-primary-500/70 placeholder:text-sm"
+      containerClassName="w-full"
       name={name}
       value={value}
       onChange={onChange}

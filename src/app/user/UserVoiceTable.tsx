@@ -5,38 +5,38 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../components/ui/table'
-import { Link } from 'react-router-dom'
-import TagComp from '../../ui/TagComp'
-import ImageComp from '../../ui/ImageComp'
-import { useLazyGetFilteredTrainingVoicesQuery } from '../../services/User'
-import { useEffect } from 'react'
-import type { FiltersType } from './Filters'
-import BeatLoaderFetch from '@/ui/BeatLoaderFetch'
-import { Hourglass, X, Check } from 'lucide-react'
+} from "../../components/ui/table";
+import { Link } from "react-router-dom";
+import TagComp from "../../ui/TagComp";
+import ImageComp from "../../ui/ImageComp";
+import { useLazyGetFilteredTrainingVoicesQuery } from "../../services/User";
+import { useEffect } from "react";
+import type { FiltersType } from "./Filters";
+import BeatLoaderFetch from "@/ui/BeatLoaderFetch";
+import { Hourglass, X, Check } from "lucide-react";
 
 interface UserVoiceTablePropsType {
-  filters: FiltersType
+  filters: FiltersType;
 }
 
 const UserVoiceTable = (props: UserVoiceTablePropsType) => {
-  const { filters } = props
+  const { filters } = props;
   const [
     LazyGetFilteredTrainingVoices,
     {
       data: LazyGetFilteredTrainingVoicesData,
       isFetching: LazyGetFilteredTrainingVoicesLoading,
     },
-  ] = useLazyGetFilteredTrainingVoicesQuery()
+  ] = useLazyGetFilteredTrainingVoicesQuery();
 
   useEffect(() => {
     LazyGetFilteredTrainingVoices({
       isActiveText: true,
-      isConfirmedVoice: filters.isConfirmedVoice,
-    }).unwrap()
-  }, [filters])
+      voiceType: filters.voiceType,
+    }).unwrap();
+  }, [filters]);
 
-  if (LazyGetFilteredTrainingVoicesLoading) return <BeatLoaderFetch />
+  if (LazyGetFilteredTrainingVoicesLoading) return <BeatLoaderFetch />;
   if (LazyGetFilteredTrainingVoicesData?.data)
     return (
       <Table className="rounded-lg overflow-hidden w-full">
@@ -84,7 +84,7 @@ const UserVoiceTable = (props: UserVoiceTablePropsType) => {
                         <Hourglass className="text-secondary-500" />
                       )
                     ) : (
-                      'بدون ویس'
+                      "بدون ویس"
                     )}
                   </div>
                 </TableCell>
@@ -93,13 +93,13 @@ const UserVoiceTable = (props: UserVoiceTablePropsType) => {
                     item.trainingTextVoiceDtoList[0].isConfirmed === false) && (
                     <Link
                       to={{
-                        pathname: '/user/voice',
+                        pathname: "/user/voice",
                         search: `?id=${item.id}&text=${item.text}`,
                       }}
                       className="flex justify-end"
                     >
                       <ImageComp
-                        src={'/images/microphone.png'}
+                        src={"/images/microphone.png"}
                         alt="mic"
                         className="w-10"
                       />
@@ -111,7 +111,7 @@ const UserVoiceTable = (props: UserVoiceTablePropsType) => {
           )}
         </TableBody>
       </Table>
-    )
-}
+    );
+};
 
-export default UserVoiceTable
+export default UserVoiceTable;

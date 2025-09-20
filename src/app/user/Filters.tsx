@@ -1,33 +1,34 @@
-import { SearchIcon } from 'lucide-react'
+import { SearchIcon } from "lucide-react";
 
-import SelectComp from '../../ui/SelectComp'
-import TextInputComp from '../../components/TextInputComp'
+import SelectComp from "../../ui/SelectComp";
+import TextInputComp from "../../components/TextInputComp";
 
 const options = [
-  { name: 'همه', value: 'null' },
-  { name: 'تایید شده', value: 'true' },
-  { name: 'تایید نشده', value: 'false' },
-]
+  { name: "ضبط نشده ها", value: "4" },
+  { name: "همه", value: "3" },
+  { name: "تایید شده", value: "1" },
+  { name: "تایید نشده", value: "2" },
+];
 
 export interface FiltersType {
-  isConfirmedVoice: 'null' | 'true' | 'false'
-  search: string
+  voiceType: "1" | "2" | "3" | "4";
+  search: string;
 }
 interface FiltersPropsType {
-  filters: FiltersType
-  setFilters: React.Dispatch<React.SetStateAction<FiltersType>>
+  filters: FiltersType;
+  setFilters: React.Dispatch<React.SetStateAction<FiltersType>>;
 }
 
 export default function Filters(props: FiltersPropsType) {
-  const { filters, setFilters } = props
+  const { filters, setFilters } = props;
 
-  const changeSelectHandler = (e: 'null' | 'true' | 'false', name: string) => {
-    setFilters({ ...filters, [name]: e })
-  }
+  const changeSelectHandler = (data: "1" | "2" | "3" | "4", name: string) => {
+    setFilters({ ...filters, [name]: data });
+  };
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters({ ...filters, search: e.target.value })
-  }
+    setFilters({ ...filters, search: e.target.value });
+  };
 
   return (
     <div className="flex flex-col gap-4 sm:flex-row">
@@ -35,8 +36,8 @@ export default function Filters(props: FiltersPropsType) {
         options={options}
         className="w-36"
         name="type"
-        value={filters.isConfirmedVoice}
-        onChange={(data) => changeSelectHandler(data, 'isConfirmedVoice')}
+        value={filters.voiceType}
+        onChange={(data) => changeSelectHandler(data, "voiceType")}
       />
       <TextInputComp
         placeholder="جستجوی متن"
@@ -48,5 +49,5 @@ export default function Filters(props: FiltersPropsType) {
         disabled
       />
     </div>
-  )
+  );
 }
